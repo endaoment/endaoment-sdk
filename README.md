@@ -1,5 +1,14 @@
 # Endaoment SDK
 
+<div align="center">
+  <a href="https://www.npmjs.com/package/@endaoment/sdk">
+    <img src="https://img.shields.io/npm/v/@endaoment/sdk?colorA=21262d&colorB=161b22&style=flat" alt="Version">
+  </a>
+  <a href="https://www.npmjs.com/package/@endaoment/sdk">
+    <img src="https://img.shields.io/npm/dm/@endaoment/sdk?colorA=21262d&colorB=161b22&style=flat" alt="Downloads per month">
+  </a>
+</div>
+
 This repository contains the SDK for developers to utilize in order to easily assemble blockchain calls to interact with the endaoment ecosystem as well as interface with endaoment APIs in order to fetch information on Organizations.
 
 This TypeScript/JavaScript client utilizes [Fetch API](https://fetch.spec.whatwg.org/). The module can be used in the following environments:

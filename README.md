@@ -9,7 +9,7 @@
   </a>
 </div>
 
-This repository contains the SDK for developers to utilize in order to easily assemble blockchain calls to interact with the endaoment ecosystem as well as interface with endaoment APIs in order to fetch information on Organizations.
+This repository contains the SDK for developers to utilize in order to easily assemble blockchain calls to interact with the endaoment ecosystem as well as interface with Endaoment APIs in order to fetch information on Organizations.
 
 This TypeScript/JavaScript client utilizes [Fetch API](https://fetch.spec.whatwg.org/). The module can be used in the following environments:
 

@@ -16,7 +16,7 @@ import {
   Divider,
 } from '@chakra-ui/react';
 
-const config = new Configuration({ network: 'local' });
+const config = new Configuration({ network: 'goerli' });
 const sdk = new EndaomentSdkApi(config);
 
 function App() {
@@ -36,12 +36,12 @@ function App() {
     <Container padding={10}>
       <Flex alignItems="center" gap="2">
         <Box p="2">
-          <Heading size="md">Art Blocks</Heading>
+          <Heading size="sm">Endaoment Org Search</Heading>
         </Box>
 
         <Spacer />
 
-        <Input onChange={(e) => setSearch(e.target.value)} value={search} placeholder="Search for an Org" />
+        <Input onChange={(e) => setSearch(e.target.value)} value={search} placeholder="Search for an org" />
 
         <Spacer />
 

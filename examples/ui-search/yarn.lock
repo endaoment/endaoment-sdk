@@ -2102,9 +2102,9 @@
   integrity sha512-AHPmaAx+RYfZz0eYu6Gviiagpmiyw98ySSlQvCUhVGDRtDFe4DBS0x1bSjdF3gqUDYOczB+yYvBTtEylYSdRhg==
 
 "@endaoment/sdk@*":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@endaoment/sdk/-/sdk-0.0.4.tgz#a7114ea4ff5d575f165916fac47488f78888be37"
-  integrity sha512-N2/bxo6nGvWODWxeM0tsdw9srZ9yYYJQITcJsJOVNQ5p7mqm/IQf70w1TCqxmGHSFgb6yQ1XdcQ9HFtsKLW7vQ==
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@endaoment/sdk/-/sdk-0.0.5.tgz#c7f132af288a080643ca1ea6809da3506a381619"
+  integrity sha512-d/7PdjM4kQB11agao5QnVI9+YRxngF+KGqTPAmsBOVWvzFGsx9kSZpFRKpA6ItwX57QpUIn1xrvo2L9uask4cQ==
 
 "@eslint/eslintrc@^1.4.1":
   version "1.4.1"

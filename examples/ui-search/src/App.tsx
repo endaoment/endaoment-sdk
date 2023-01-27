@@ -19,12 +19,11 @@ import {
   AccordionIcon,
   Tag,
   Link,
-  Image,
   Avatar,
 } from '@chakra-ui/react';
 import { ExternalLinkIcon } from '@chakra-ui/icons';
 
-const config = new Configuration({ network: 'local' });
+const config = new Configuration({ network: 'goerli' });
 const sdk = new EndaomentSdkApi(config);
 
 function App() {

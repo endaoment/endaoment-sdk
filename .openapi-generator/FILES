@@ -1,6 +1,4 @@
 .gitignore
-.npmignore
-README.md
 src/apis/EndaomentSdkApi.ts
 src/apis/index.ts
 src/index.ts

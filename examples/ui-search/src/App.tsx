@@ -20,7 +20,7 @@ import {
   Link,
 } from '@chakra-ui/react';
 
-const config = new Configuration({ network: 'local' });
+const config = new Configuration({ network: 'goerli' });
 const sdk = new EndaomentSdkApi(config);
 
 function App() {

@@ -6,17 +6,21 @@ import {
   Input,
   Button,
   Stat,
-  StatLabel,
-  StatHelpText,
   Flex,
   Box,
   Heading,
-  Spacer,
   ButtonGroup,
   Divider,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
+  Tag,
+  Link,
 } from '@chakra-ui/react';
 
-const config = new Configuration({ network: 'goerli' });
+const config = new Configuration({ network: 'local' });
 const sdk = new EndaomentSdkApi(config);
 
 function App() {
@@ -33,19 +37,11 @@ function App() {
   };
 
   return (
-    <Container padding={10}>
+    <Container p={16}>
       <Flex alignItems="center" gap="2">
-        <Box p="2">
-          <Heading size="sm">Endaoment Org Search</Heading>
-        </Box>
+        <Input onChange={(e) => setSearch(e.target.value)} value={search} placeholder="Search Endaoment" />
 
-        <Spacer />
-
-        <Input onChange={(e) => setSearch(e.target.value)} value={search} placeholder="Search for an org" />
-
-        <Spacer />
-
-        <ButtonGroup gap="2">
+        <ButtonGroup>
           <Button onClick={handleSearch} isDisabled={!search} isLoading={loading} colorScheme="blackAlpha">
             Search
           </Button>
@@ -56,12 +52,33 @@ function App() {
 
       <Flex direction={'column'} gap="2" padding={5}>
         {searchResultOrgs?.length === 0 && <Stat>No results found</Stat>}
-        {searchResultOrgs?.map((org) => (
-          <Stat>
-            <StatLabel>{org.name}</StatLabel>
-            <StatHelpText>{org.contractAddress}</StatHelpText>
-          </Stat>
-        ))}
+        <Accordion>
+          {searchResultOrgs?.map((org) => (
+            <AccordionItem>
+              <h2>
+                <AccordionButton p="4">
+                  <Box flex="1" textAlign="left">
+                    <Heading size="sm">{org.name}</Heading>
+                  </Box>
+                  <AccordionIcon />
+                </AccordionButton>
+              </h2>
+              <AccordionPanel>
+                <p>{org.description}</p>
+                <Box p="2" mt="2">
+                  Org Contract{' '}
+                  <Link href={`https://etherscan.io/address/${org.contractAddress}`}>
+                    <Tag>
+                      {org.contractAddress.slice(0, 5)}...{org.contractAddress.slice(-3)}
+                    </Tag>
+                  </Link>
+                  <br />
+                  <span>View on Endaoment</span>
+                </Box>
+              </AccordionPanel>
+            </AccordionItem>
+          ))}
+        </Accordion>
       </Flex>
     </Container>
   );

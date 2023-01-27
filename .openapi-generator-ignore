@@ -37,4 +37,5 @@
 package.json
 src/runtime.ts
 .git
+.npmignore
 README.md

@@ -1,11 +1,11 @@
 {
   "name": "@endaoment/sdk",
-  "version": "0.0.2",
-  "description": "OpenAPI client for @endaoment/sdk",
+  "version": "0.0.3",
+  "description": "Endaoment SDK",
   "author": "Endaoment",
   "repository": {
     "type": "git",
-    "url": "https://github.com/GIT_USER_ID/GIT_REPO_ID.git"
+    "url": "https://github.com/endaoment/endaoment-sdk.git"
   },
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",

@@ -16,88 +16,67 @@ import { exists, mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface OrgDto
+ * @interface FundDto
  */
-export interface OrgDto {
+export interface FundDto {
     /**
-     * The org's Endaoment id
+     * The fund's Endaoment id
      * @type {string}
-     * @memberof OrgDto
+     * @memberof FundDto
      */
     id: string;
     /**
-     * The org's name
+     * The fund's name
      * @type {string}
-     * @memberof OrgDto
+     * @memberof FundDto
      */
     name: string;
     /**
-     * The org's EIN
+     * The fund's contract address
      * @type {string}
-     * @memberof OrgDto
-     */
-    ein: string;
-    /**
-     * The org's contract address
-     * @type {string}
-     * @memberof OrgDto
+     * @memberof FundDto
      */
     contractAddress: string;
     /**
-     * The org's logo url
-     * @type {string}
-     * @memberof OrgDto
+     * The fund's logo url
+     * @type {object}
+     * @memberof FundDto
      */
-    logoUrl: string;
+    logoUrl: object | null;
     /**
-     * The org's NTEE code
+     * The fund's description
      * @type {string}
-     * @memberof OrgDto
+     * @memberof FundDto
      */
-    nteeCode: string;
+    description: string;
     /**
-     * The org's NTEE description
+     * The fund's Endaoment url
      * @type {string}
-     * @memberof OrgDto
-     */
-    nteeDescription: string;
-    /**
-     * The org's description
-     * @type {string}
-     * @memberof OrgDto
-     */
-    description: string | null;
-    /**
-     * The org's Endaoment url
-     * @type {string}
-     * @memberof OrgDto
+     * @memberof FundDto
      */
     endaomentUrl: string;
 }
 
 /**
- * Check if a given object implements the OrgDto interface.
+ * Check if a given object implements the FundDto interface.
  */
-export function instanceOfOrgDto(value: object): boolean {
+export function instanceOfFundDto(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "id" in value;
     isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "ein" in value;
     isInstance = isInstance && "contractAddress" in value;
     isInstance = isInstance && "logoUrl" in value;
-    isInstance = isInstance && "nteeCode" in value;
-    isInstance = isInstance && "nteeDescription" in value;
     isInstance = isInstance && "description" in value;
     isInstance = isInstance && "endaomentUrl" in value;
 
     return isInstance;
 }
 
-export function OrgDtoFromJSON(json: any): OrgDto {
-    return OrgDtoFromJSONTyped(json, false);
+export function FundDtoFromJSON(json: any): FundDto {
+    return FundDtoFromJSONTyped(json, false);
 }
 
-export function OrgDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean): OrgDto {
+export function FundDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean): FundDto {
     if ((json === undefined) || (json === null)) {
         return json;
     }
@@ -105,17 +84,14 @@ export function OrgDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean): Or
         
         'id': json['id'],
         'name': json['name'],
-        'ein': json['ein'],
         'contractAddress': json['contractAddress'],
         'logoUrl': json['logoUrl'],
-        'nteeCode': json['nteeCode'],
-        'nteeDescription': json['nteeDescription'],
         'description': json['description'],
         'endaomentUrl': json['endaomentUrl'],
     };
 }
 
-export function OrgDtoToJSON(value?: OrgDto | null): any {
+export function FundDtoToJSON(value?: FundDto | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -126,11 +102,8 @@ export function OrgDtoToJSON(value?: OrgDto | null): any {
         
         'id': value.id,
         'name': value.name,
-        'ein': value.ein,
         'contractAddress': value.contractAddress,
         'logoUrl': value.logoUrl,
-        'nteeCode': value.nteeCode,
-        'nteeDescription': value.nteeDescription,
         'description': value.description,
         'endaomentUrl': value.endaomentUrl,
     };

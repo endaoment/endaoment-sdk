@@ -6,6 +6,7 @@ src/apis/index.ts
 src/index.ts
 src/models/DonationSwapDto.ts
 src/models/DonationSwapDtoQuote.ts
+src/models/FundDto.ts
 src/models/OrgDto.ts
 src/models/SwapQuote.ts
 src/models/TransactionDto.ts

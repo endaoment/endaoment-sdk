@@ -16,12 +16,15 @@
 import * as runtime from '../runtime';
 import type {
   DonationSwapDto,
+  FundDto,
   OrgDto,
   TransactionDto,
 } from '../models';
 import {
     DonationSwapDtoFromJSON,
     DonationSwapDtoToJSON,
+    FundDtoFromJSON,
+    FundDtoToJSON,
     OrgDtoFromJSON,
     OrgDtoToJSON,
     TransactionDtoFromJSON,
@@ -43,9 +46,20 @@ export interface GetOrgDeployTransactionRequest {
     ein: string;
 }
 
+export interface GetVisibleFundsRequest {
+    count?: number;
+    offset?: number;
+}
+
 export interface SearchDeployedOrgsRequest {
     name?: string;
     nteeMajorCodes?: string;
+    count?: number;
+    offset?: number;
+}
+
+export interface SearchVisibleFundsRequest {
+    name: string;
     count?: number;
     offset?: number;
 }
@@ -73,7 +87,7 @@ export class EndaomentSdkApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/sdk/orgs`,
+            path: `/v1/sdk/orgs`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -120,7 +134,7 @@ export class EndaomentSdkApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/sdk/donations/swap`,
+            path: `/v1/sdk/donations/swap`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -154,7 +168,7 @@ export class EndaomentSdkApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/sdk/orgs/deploy`,
+            path: `/v1/sdk/orgs/deploy`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -172,8 +186,44 @@ export class EndaomentSdkApi extends runtime.BaseAPI {
     }
 
     /**
+     * Only community and transparent funds will be returned
+     * Get a list of Endaoment funds
+     */
+    async getVisibleFundsRaw(requestParameters: GetVisibleFundsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<FundDto>>> {
+        const queryParameters: any = {};
+
+        if (requestParameters.count !== undefined) {
+            queryParameters['count'] = requestParameters.count;
+        }
+
+        if (requestParameters.offset !== undefined) {
+            queryParameters['offset'] = requestParameters.offset;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/v1/sdk/funds`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(FundDtoFromJSON));
+    }
+
+    /**
+     * Only community and transparent funds will be returned
+     * Get a list of Endaoment funds
+     */
+    async getVisibleFunds(requestParameters: GetVisibleFundsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<FundDto>> {
+        const response = await this.getVisibleFundsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Note: If using `name` and `nteeMajorCodes`, the search will perform an AND operation of both inputs
-     * Get a list of deployed Org contracts filtered by search parameter
+     * Get a list of deployed Endaoment Orgs, filtered by search parameter
      */
     async searchDeployedOrgsRaw(requestParameters: SearchDeployedOrgsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<OrgDto>>> {
         const queryParameters: any = {};
@@ -197,7 +247,7 @@ export class EndaomentSdkApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/sdk/orgs/search`,
+            path: `/v1/sdk/orgs/search`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -208,10 +258,54 @@ export class EndaomentSdkApi extends runtime.BaseAPI {
 
     /**
      * Note: If using `name` and `nteeMajorCodes`, the search will perform an AND operation of both inputs
-     * Get a list of deployed Org contracts filtered by search parameter
+     * Get a list of deployed Endaoment Orgs, filtered by search parameter
      */
     async searchDeployedOrgs(requestParameters: SearchDeployedOrgsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<OrgDto>> {
         const response = await this.searchDeployedOrgsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Only community and transparent funds will be returned
+     * Get a list of Endaoment Funds, filtered by search paramenter
+     */
+    async searchVisibleFundsRaw(requestParameters: SearchVisibleFundsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<FundDto>>> {
+        if (requestParameters.name === null || requestParameters.name === undefined) {
+            throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling searchVisibleFunds.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.name !== undefined) {
+            queryParameters['name'] = requestParameters.name;
+        }
+
+        if (requestParameters.count !== undefined) {
+            queryParameters['count'] = requestParameters.count;
+        }
+
+        if (requestParameters.offset !== undefined) {
+            queryParameters['offset'] = requestParameters.offset;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/v1/sdk/funds/search`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(FundDtoFromJSON));
+    }
+
+    /**
+     * Only community and transparent funds will be returned
+     * Get a list of Endaoment Funds, filtered by search paramenter
+     */
+    async searchVisibleFunds(requestParameters: SearchVisibleFundsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<FundDto>> {
+        const response = await this.searchVisibleFundsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

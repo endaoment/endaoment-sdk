@@ -34,12 +34,8 @@
 
 #!docs/README.md
 
-# Package definitions
-
 package.json
-
-# Configuration overrides
-
 src/runtime.ts
-
 .git
+.npmignore
+README.md

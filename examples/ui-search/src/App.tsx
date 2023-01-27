@@ -1,51 +1,54 @@
-import { Configuration, EndaomentSdkApi, OrgDto } from '@endaoment/sdk';
+import { Configuration, EndaomentSdkApi, FundDto, OrgDto } from '@endaoment/sdk';
 
 import { useState } from 'react';
+import parse from 'html-react-parser';
 import {
   Container,
   Input,
   Button,
   Stat,
-  StatLabel,
-  StatHelpText,
   Flex,
   Box,
   Heading,
-  Spacer,
   ButtonGroup,
   Divider,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
+  Tag,
+  Link,
+  Image,
+  Avatar,
 } from '@chakra-ui/react';
+import { ExternalLinkIcon } from '@chakra-ui/icons';
 
-const config = new Configuration({ network: 'goerli' });
+const config = new Configuration({ network: 'local' });
 const sdk = new EndaomentSdkApi(config);
 
 function App() {
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
-  const [searchResultOrgs, setSearchResultOrgs] = useState<OrgDto[]>();
+  const [searchedEntities, setSearchedEntities] = useState<(FundDto | OrgDto)[]>();
 
   const handleSearch = async () => {
     setLoading(true);
-    const orgs = await sdk.searchDeployedOrgs({ name: search });
-    setSearchResultOrgs(orgs);
+    const [funds, orgs] = await Promise.all([
+      sdk.searchVisibleFunds({ name: search }),
+      sdk.searchDeployedOrgs({ name: search }),
+    ]);
+    setSearchedEntities([...funds, ...orgs]);
     setLoading(false);
     setSearch('');
   };
 
   return (
-    <Container padding={10}>
+    <Container maxW="2xl" p="4" mt="16">
       <Flex alignItems="center" gap="2">
-        <Box p="2">
-          <Heading size="sm">Endaoment Org Search</Heading>
-        </Box>
+        <Input onChange={(e) => setSearch(e.target.value)} value={search} placeholder="Search Endaoment" />
 
-        <Spacer />
-
-        <Input onChange={(e) => setSearch(e.target.value)} value={search} placeholder="Search for an org" />
-
-        <Spacer />
-
-        <ButtonGroup gap="2">
+        <ButtonGroup>
           <Button onClick={handleSearch} isDisabled={!search} isLoading={loading} colorScheme="blackAlpha">
             Search
           </Button>
@@ -55,13 +58,42 @@ function App() {
       <Divider margin={4} />
 
       <Flex direction={'column'} gap="2" padding={5}>
-        {searchResultOrgs?.length === 0 && <Stat>No results found</Stat>}
-        {searchResultOrgs?.map((org) => (
-          <Stat>
-            <StatLabel>{org.name}</StatLabel>
-            <StatHelpText>{org.contractAddress}</StatHelpText>
-          </Stat>
-        ))}
+        {searchedEntities?.length === 0 && <Stat>No results found</Stat>}
+        <Accordion>
+          {searchedEntities?.map((entity) => (
+            <AccordionItem key={entity.id}>
+              <h2>
+                <AccordionButton p="4">
+                  <Box flex="1" textAlign="left">
+                    <Heading size="sm">{entity.name}</Heading>
+                  </Box>
+                  <AccordionIcon />
+                </AccordionButton>
+              </h2>
+              <AccordionPanel>
+                <Flex alignItems="center" gap="8" p="4">
+                  {entity.logoUrl && <Avatar src={entity.logoUrl?.toString()} name={entity.name} size="2xl" />}
+                  <p>{parse(entity.description || '')}</p>
+                </Flex>
+
+                <Flex mt="2" justifyContent="space-between">
+                  <span>
+                    Contract{' '}
+                    <Tag>
+                      {entity.contractAddress.slice(0, 5)}...{entity.contractAddress.slice(-3)}
+                    </Tag>
+                    <Link href={`https://etherscan.io/address/${entity.contractAddress}`} target="_blank" ml="1">
+                      <ExternalLinkIcon />
+                    </Link>
+                  </span>
+                  <Link href={entity.endaomentUrl} target="_blank">
+                    View on Endaoment
+                  </Link>
+                </Flex>
+              </AccordionPanel>
+            </AccordionItem>
+          ))}
+        </Accordion>
       </Flex>
     </Container>
   );

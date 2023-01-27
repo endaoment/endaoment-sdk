@@ -39,10 +39,10 @@ export interface FundDto {
     contractAddress: string;
     /**
      * The fund's logo url
-     * @type {object}
+     * @type {string}
      * @memberof FundDto
      */
-    logoUrl: object | null;
+    logoUrl: string | null;
     /**
      * The fund's description
      * @type {string}

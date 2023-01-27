@@ -39,3 +39,4 @@ src/runtime.ts
 .git
 .npmignore
 README.md
+tsconfig.json

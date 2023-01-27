@@ -1,6 +1,6 @@
 {
   "name": "@endaoment/sdk",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "SDK for developers to utilize in order to easily assemble blockchain calls to interact with the endaoment ecosystem as well as interface with endaoment APIs in order to fetch information on Organizations",
   "author": "Endaoment",
   "repository": {

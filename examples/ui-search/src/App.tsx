@@ -72,7 +72,7 @@ function App() {
               </h2>
               <AccordionPanel>
                 <Flex alignItems="center" gap="8" p="4">
-                  {entity.logoUrl && <Avatar src={entity.logoUrl?.toString()} name={entity.name} size="2xl" />}
+                  {entity.logoUrl && <Avatar src={entity.logoUrl} name={entity.name} size="2xl" />}
                   <p>{parse(entity.description || '')}</p>
                 </Flex>
 

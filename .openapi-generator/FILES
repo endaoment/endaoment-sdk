@@ -9,4 +9,3 @@ src/models/OrgDto.ts
 src/models/SwapQuote.ts
 src/models/TransactionDto.ts
 src/models/index.ts
-tsconfig.json

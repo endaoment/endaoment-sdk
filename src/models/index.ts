@@ -2,7 +2,7 @@
 /* eslint-disable */
 export * from './DonationSwapDto';
 export * from './DonationSwapDtoQuote';
-export * from './FundDto';
-export * from './OrgDto';
+export * from './FundSdkDto';
+export * from './OrgSdkDto';
 export * from './SwapQuote';
-export * from './TransactionDto';
+export * from './TransactionSdkDto';

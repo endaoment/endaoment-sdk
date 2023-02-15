@@ -1,4 +1,4 @@
-import { EndaomentSdkApi, FundDto, OrgDto } from '@endaoment/sdk';
+import { EndaomentSdkApi, FundSdkDto, OrgSdkDto } from '@endaoment/sdk';
 
 import { useState } from 'react';
 import parse from 'html-react-parser';
@@ -30,24 +30,24 @@ import {
 import { CopyIcon, ExternalLinkIcon } from '@chakra-ui/icons';
 
 function Discoverability({ sdk }: { sdk: EndaomentSdkApi }) {
-  const [search, setSearch] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
   const [searchingForOrgs, setSearchingForOrgs] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [searchedEntities, setSearchedEntities] = useState<(FundDto | OrgDto)[]>();
+  const [searchedEntities, setSearchedEntities] = useState<(FundSdkDto | OrgSdkDto)[]>();
 
   const handleChangeEntityType = () => {
     setSearchingForOrgs(!searchingForOrgs);
-    setSearch('');
+    setSearchTerm('');
   };
 
   const handleSearch = async () => {
     setLoading(true);
 
-    if (searchingForOrgs) setSearchedEntities(await sdk.searchDeployedOrgs({ name: search }));
-    else setSearchedEntities(await sdk.searchVisibleFunds({ name: search }));
+    if (searchingForOrgs) setSearchedEntities(await sdk.searchOrgs({ searchTerm }));
+    else setSearchedEntities(await sdk.searchVisibleFunds({ name: searchTerm }));
 
     setLoading(false);
-    setSearch('');
+    setSearchTerm('');
   };
 
   return (
@@ -55,8 +55,8 @@ function Discoverability({ sdk }: { sdk: EndaomentSdkApi }) {
       <Flex alignItems="center" gap="2">
         <InputGroup>
           <Input
-            onChange={(e) => setSearch(e.target.value)}
-            value={search}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            value={searchTerm}
             placeholder={`Search Endaoment ${searchingForOrgs ? 'Orgs' : 'Funds'}`}
           />
           <InputRightElement
@@ -77,7 +77,7 @@ function Discoverability({ sdk }: { sdk: EndaomentSdkApi }) {
         </InputGroup>
 
         <ButtonGroup>
-          <Button onClick={handleSearch} isDisabled={!search} isLoading={loading}>
+          <Button onClick={handleSearch} isDisabled={!searchTerm} isLoading={loading}>
             Search
           </Button>
         </ButtonGroup>

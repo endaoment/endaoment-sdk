@@ -1,11 +1,10 @@
-import { Configuration, EndaomentSdkApi, FundDto, OrgDto } from '@endaoment/sdk';
+import { EndaomentSdkApi, FundDto, OrgDto } from '@endaoment/sdk';
 
 import { useState } from 'react';
 import parse from 'html-react-parser';
 import {
   Input,
   Button,
-  Stat,
   Flex,
   Box,
   Heading,
@@ -30,10 +29,7 @@ import {
 } from '@chakra-ui/react';
 import { CopyIcon, ExternalLinkIcon } from '@chakra-ui/icons';
 
-const config = new Configuration({ network: 'local' });
-const sdk = new EndaomentSdkApi(config);
-
-function Discoverability() {
+function Discoverability({ sdk }: { sdk: EndaomentSdkApi }) {
   const [search, setSearch] = useState('');
   const [searchingForOrgs, setSearchingForOrgs] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -88,8 +84,8 @@ function Discoverability() {
       </Flex>
 
       <Flex direction={'column'} gap="2" padding={5}>
-        {searchedEntities?.length === 0 && <Stat>No results found</Stat>}
-        <Accordion allowToggle allowMultiple>
+        {searchedEntities?.length === 0 && <Text>No results found</Text>}
+        <Accordion allowMultiple>
           {searchedEntities?.map((entity) => (
             <AccordionItem key={entity.id}>
               <h2>

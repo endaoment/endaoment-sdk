@@ -8,7 +8,7 @@ import { publicProvider } from 'wagmi/providers/public';
 import { ChakraProvider } from '@chakra-ui/react';
 import App from './App';
 
-// const {  chains } = configureChains([goerli], [publicProvider()]);
+// const { chains } = configureChains([goerli], [publicProvider()]);
 const { chains } = configureChains([foundry], [publicProvider()]);
 
 const client = createClient(getDefaultClient({ appName: 'Endaoment SDK Examples', chains }));

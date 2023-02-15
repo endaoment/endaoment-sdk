@@ -1,4 +1,4 @@
-import { EndaomentSdkApi, FundSdkDto, OrgSdkDto } from '@endaoment/sdk';
+import { EndaomentSdkApi, EndaomentSdkFund, EndaomentSdkOrg } from '@endaoment/sdk';
 
 import { useState } from 'react';
 import parse from 'html-react-parser';
@@ -26,6 +26,7 @@ import {
   HStack,
   VStack,
   Tooltip,
+  Badge,
 } from '@chakra-ui/react';
 import { CopyIcon, ExternalLinkIcon } from '@chakra-ui/icons';
 
@@ -33,7 +34,7 @@ function Discoverability({ sdk }: { sdk: EndaomentSdkApi }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchingForOrgs, setSearchingForOrgs] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [searchedEntities, setSearchedEntities] = useState<(FundSdkDto | OrgSdkDto)[]>();
+  const [searchedEntities, setSearchedEntities] = useState<(EndaomentSdkFund | EndaomentSdkOrg)[]>();
 
   const handleChangeEntityType = () => {
     setSearchingForOrgs(!searchingForOrgs);
@@ -41,6 +42,8 @@ function Discoverability({ sdk }: { sdk: EndaomentSdkApi }) {
   };
 
   const handleSearch = async () => {
+    if (!searchTerm) return;
+
     setLoading(true);
 
     if (searchingForOrgs) setSearchedEntities(await sdk.searchOrgs({ searchTerm }));
@@ -57,6 +60,7 @@ function Discoverability({ sdk }: { sdk: EndaomentSdkApi }) {
           <Input
             onChange={(e) => setSearchTerm(e.target.value)}
             value={searchTerm}
+            onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
             placeholder={`Search Endaoment ${searchingForOrgs ? 'Orgs' : 'Funds'}`}
           />
           <InputRightElement
@@ -91,7 +95,12 @@ function Discoverability({ sdk }: { sdk: EndaomentSdkApi }) {
               <h2>
                 <AccordionButton p="4">
                   <Box flex="1" textAlign="left">
-                    <Heading size="sm">{entity.name}</Heading>
+                    <Heading size="xs" verticalAlign="middle">
+                      <HStack>
+                        <span>{entity.name}</span>
+                        {entity.contractAddress && <Badge colorScheme="blue">Deployed</Badge>}
+                      </HStack>
+                    </Heading>
                   </Box>
                   <AccordionIcon />
                 </AccordionButton>
@@ -103,21 +112,24 @@ function Discoverability({ sdk }: { sdk: EndaomentSdkApi }) {
                 </Flex>
 
                 <Flex mt="2" justifyContent="space-between">
-                  <HStack>
-                    <Tooltip label={entity.contractAddress}>
-                      <Tag>
-                        {entity.contractAddress.slice(0, 5)}...{entity.contractAddress.slice(-3)}
-                      </Tag>
-                    </Tooltip>
-                    <Tooltip label="Copy Contract Address">
-                      <IconButton
-                        onClick={() => navigator.clipboard.writeText(entity.contractAddress)}
-                        icon={<CopyIcon />}
-                        aria-label="Copy Contract Address"
-                        size="xs"
-                      />
-                    </Tooltip>
-                  </HStack>
+                  {entity.contractAddress && (
+                    <HStack>
+                      <Tooltip label={entity.contractAddress}>
+                        <Tag>
+                          {entity.contractAddress.slice(0, 5)}...{entity.contractAddress.slice(-3)}
+                        </Tag>
+                      </Tooltip>
+                      <Tooltip label="Copy Contract Address">
+                        <IconButton
+                          onClick={() => navigator.clipboard.writeText(entity.contractAddress)}
+                          icon={<CopyIcon />}
+                          aria-label="Copy Contract Address"
+                          size="xs"
+                        />
+                      </Tooltip>
+                    </HStack>
+                  )}
+                  {!entity.contractAddress && <span />}
 
                   <VStack>
                     <Link href={entity.endaomentUrl} target="_blank">

@@ -1,41 +1,45 @@
-import { EndaomentSdkApi, OrgDto, TransactionDto } from '@endaoment/sdk';
+import { EndaomentSdkApi, EndaomentSdkOrg, EndaomentSdkTransaction } from '@endaoment/sdk';
 
 import { useState } from 'react';
 import {
   Button,
   Flex,
-  NumberInput,
-  NumberInputField,
   Code,
   VStack,
-  IconButton,
-  TagRightIcon,
   Tooltip,
+  InputGroup,
+  Input,
+  ButtonGroup,
+  ListItem,
+  UnorderedList,
+  Text,
 } from '@chakra-ui/react';
-import { ArrowRightIcon, ChevronRightIcon, InfoIcon } from '@chakra-ui/icons';
-import { ethers } from 'ethers';
+import { ChevronRightIcon, InfoIcon } from '@chakra-ui/icons';
 import { usePrepareSendTransaction, useSendTransaction } from 'wagmi';
 
 function EntityDeploy({ sdk }: { sdk: EndaomentSdkApi }) {
-  const [searchedEIN, setSearchedEIN] = useState('872061793');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [undeployedOrgs, setUndeployedOrgs] = useState<EndaomentSdkOrg[]>([]);
+  const [orgToDeploy, setOrgToDeploy] = useState<EndaomentSdkOrg>();
   const [loading, setLoading] = useState(false);
-  const [deployTransaction, setDeployTransaction] = useState<TransactionDto>();
+  const [deployTransaction, setDeployTransaction] = useState<EndaomentSdkTransaction>();
   const { config, error } = usePrepareSendTransaction({
     enabled: !!deployTransaction,
     request: { to: deployTransaction?.to as string, data: deployTransaction?.data as string },
+    onError: (error) => console.error(error),
   });
   const { sendTransaction } = useSendTransaction(config);
 
   const handleSearch = async () => {
     setLoading(true);
-    try {
-      setDeployTransaction(await sdk.getOrgDeployTransaction({ ein: searchedEIN }));
-    } catch {
-      setDeployTransaction(undefined);
-    } finally {
-      setLoading(false);
-      setSearchedEIN('');
-    }
+    setUndeployedOrgs(await sdk.searchOrgs({ searchTerm, deployedStatus: 'undeployed' }));
+    setLoading(false);
+    setSearchTerm('');
+  };
+
+  const handleGetDeploymentData = async (org: EndaomentSdkOrg) => {
+    setOrgToDeploy(org);
+    setDeployTransaction(await sdk.getOrgDeployTransaction(org));
   };
 
   const handleDeployOrg = async () => {
@@ -47,46 +51,76 @@ function EntityDeploy({ sdk }: { sdk: EndaomentSdkApi }) {
 
   return (
     <>
-      <Flex alignItems="center" gap="2" justifyContent="center">
-        <NumberInput value={searchedEIN} onChange={setSearchedEIN}>
-          <NumberInputField placeholder="Org EIN" />
-        </NumberInput>
-        <Button onClick={handleSearch} isDisabled={!searchedEIN} isLoading={loading}>
-          Search Org by EIN
-        </Button>
+      <Flex alignItems="center" gap="2">
+        <InputGroup>
+          <Input
+            onChange={(e) => setSearchTerm(e.target.value)}
+            value={searchTerm}
+            onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+            placeholder="Search for undeployed Endaoment Orgs"
+          />
+        </InputGroup>
+
+        <ButtonGroup>
+          <Button onClick={handleSearch} isDisabled={!searchTerm} isLoading={loading}>
+            Search
+          </Button>
+        </ButtonGroup>
       </Flex>
 
-      <VStack my={4}>
-        {deployTransaction && (
-          <>
-            <Code p={8}>
-              {'{'}
-              <br />
-              {`"to": "${deployTransaction.to}",`}{' '}
-              <Tooltip label="Endaoment's `OrgFundFactory` contract address">
-                <InfoIcon />
-              </Tooltip>{' '}
-              <br />
-              {`"data": "${deployTransaction.data}",`}{' '}
-              <Tooltip label="The calldata required to deploy this specific Org">
-                <InfoIcon />
-              </Tooltip>{' '}
-              <br />
-              {`"value": ${deployTransaction.value}`}{' '}
-              <Tooltip label="For entity deployments, this will always be 0 since no ETH is required">
-                <InfoIcon />
-              </Tooltip>{' '}
-              <br />
-              {'}'}
-              <br />
-            </Code>
+      <VStack my="4">
+        <Code p={4} w="100%">
+          {deployTransaction && orgToDeploy && (
+            <Text mb="4">{`// Transaction data to deploy ${orgToDeploy.name} (EIN ${orgToDeploy.ein})`}</Text>
+          )}
+          {'{'}
+          <br />
+          <Text ml="4">
+            <Text mr="2" display="inline">
+              "to": "{`${deployTransaction?.to || '0x...'}",`}
+            </Text>
+            <Tooltip label="Endaoment's `OrgFundFactory` contract address">
+              <InfoIcon />
+            </Tooltip>{' '}
+          </Text>
+          <Text ml="4">
+            <Text mr="2" display="inline">
+              "data": "{`${deployTransaction?.data || '0x...'}",`}
+            </Text>
+            <Tooltip label="The calldata required to deploy this specific Org">
+              <InfoIcon />
+            </Tooltip>{' '}
+          </Text>
+          <Text ml="4">
+            <Text mr="2" display="inline">
+              "value": {`${deployTransaction?.value || '0'}`}
+            </Text>
+            <Tooltip label="For entity deployments, this will always be 0 since no ETH is required">
+              <InfoIcon />
+            </Tooltip>{' '}
+          </Text>
+          {'}'}
+        </Code>
 
-            <Button onClick={handleDeployOrg} rightIcon={<ChevronRightIcon />} aria-label="Deploy Org">
-              Deploy Org
-            </Button>
-          </>
+        {deployTransaction && (
+          <Button onClick={handleDeployOrg} rightIcon={<ChevronRightIcon />} aria-label="Deploy Org">
+            Deploy Org
+          </Button>
         )}
       </VStack>
+
+      <UnorderedList>
+        {undeployedOrgs.map((org) => (
+          <ListItem key={org.ein} mb={4}>
+            <Text display="inline" mr="2">
+              {org.name}
+            </Text>
+            <Button onClick={() => handleGetDeploymentData(org)} size="xs">
+              Get Deployment Data
+            </Button>
+          </ListItem>
+        ))}
+      </UnorderedList>
     </>
   );
 }

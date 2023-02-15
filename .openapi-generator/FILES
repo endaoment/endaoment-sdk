@@ -4,8 +4,8 @@ src/apis/index.ts
 src/index.ts
 src/models/DonationSwapDto.ts
 src/models/DonationSwapDtoQuote.ts
-src/models/FundSdkDto.ts
-src/models/OrgSdkDto.ts
+src/models/EndaomentSdkFund.ts
+src/models/EndaomentSdkOrg.ts
+src/models/EndaomentSdkTransaction.ts
 src/models/SwapQuote.ts
-src/models/TransactionSdkDto.ts
 src/models/index.ts

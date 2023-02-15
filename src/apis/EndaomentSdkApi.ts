@@ -16,19 +16,19 @@
 import * as runtime from '../runtime';
 import type {
   DonationSwapDto,
-  FundSdkDto,
-  OrgSdkDto,
-  TransactionSdkDto,
+  EndaomentSdkFund,
+  EndaomentSdkOrg,
+  EndaomentSdkTransaction,
 } from '../models';
 import {
     DonationSwapDtoFromJSON,
     DonationSwapDtoToJSON,
-    FundSdkDtoFromJSON,
-    FundSdkDtoToJSON,
-    OrgSdkDtoFromJSON,
-    OrgSdkDtoToJSON,
-    TransactionSdkDtoFromJSON,
-    TransactionSdkDtoToJSON,
+    EndaomentSdkFundFromJSON,
+    EndaomentSdkFundToJSON,
+    EndaomentSdkOrgFromJSON,
+    EndaomentSdkOrgToJSON,
+    EndaomentSdkTransactionFromJSON,
+    EndaomentSdkTransactionToJSON,
 } from '../models';
 
 export interface GetDeployedOrgsRequest {
@@ -75,7 +75,7 @@ export class EndaomentSdkApi extends runtime.BaseAPI {
      * Only organizations that already have a deployed contract on Endaoment will be returned
      * Get a list of deployed Org contracts
      */
-    async getDeployedOrgsRaw(requestParameters: GetDeployedOrgsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<OrgSdkDto>>> {
+    async getDeployedOrgsRaw(requestParameters: GetDeployedOrgsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<EndaomentSdkOrg>>> {
         const queryParameters: any = {};
 
         if (requestParameters.count !== undefined) {
@@ -95,14 +95,14 @@ export class EndaomentSdkApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(OrgSdkDtoFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(EndaomentSdkOrgFromJSON));
     }
 
     /**
      * Only organizations that already have a deployed contract on Endaoment will be returned
      * Get a list of deployed Org contracts
      */
-    async getDeployedOrgs(requestParameters: GetDeployedOrgsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<OrgSdkDto>> {
+    async getDeployedOrgs(requestParameters: GetDeployedOrgsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<EndaomentSdkOrg>> {
         const response = await this.getDeployedOrgsRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -156,7 +156,7 @@ export class EndaomentSdkApi extends runtime.BaseAPI {
     /**
      * Get the transaction information required to deploy a given org
      */
-    async getOrgDeployTransactionRaw(requestParameters: GetOrgDeployTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TransactionSdkDto>> {
+    async getOrgDeployTransactionRaw(requestParameters: GetOrgDeployTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EndaomentSdkTransaction>> {
         if (requestParameters.ein === null || requestParameters.ein === undefined) {
             throw new runtime.RequiredError('ein','Required parameter requestParameters.ein was null or undefined when calling getOrgDeployTransaction.');
         }
@@ -176,13 +176,13 @@ export class EndaomentSdkApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => TransactionSdkDtoFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => EndaomentSdkTransactionFromJSON(jsonValue));
     }
 
     /**
      * Get the transaction information required to deploy a given org
      */
-    async getOrgDeployTransaction(requestParameters: GetOrgDeployTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TransactionSdkDto> {
+    async getOrgDeployTransaction(requestParameters: GetOrgDeployTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<EndaomentSdkTransaction> {
         const response = await this.getOrgDeployTransactionRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -191,7 +191,7 @@ export class EndaomentSdkApi extends runtime.BaseAPI {
      * Only community and transparent funds will be returned
      * Get a list of Endaoment funds
      */
-    async getVisibleFundsRaw(requestParameters: GetVisibleFundsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<FundSdkDto>>> {
+    async getVisibleFundsRaw(requestParameters: GetVisibleFundsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<EndaomentSdkFund>>> {
         const queryParameters: any = {};
 
         if (requestParameters.count !== undefined) {
@@ -211,14 +211,14 @@ export class EndaomentSdkApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(FundSdkDtoFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(EndaomentSdkFundFromJSON));
     }
 
     /**
      * Only community and transparent funds will be returned
      * Get a list of Endaoment funds
      */
-    async getVisibleFunds(requestParameters: GetVisibleFundsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<FundSdkDto>> {
+    async getVisibleFunds(requestParameters: GetVisibleFundsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<EndaomentSdkFund>> {
         const response = await this.getVisibleFundsRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -227,7 +227,7 @@ export class EndaomentSdkApi extends runtime.BaseAPI {
      * Note: If using multiple parameters, the search will perform an AND operation of all inputs
      * Get a list of Endaoment Orgs, filtered by search parameters
      */
-    async searchOrgsRaw(requestParameters: SearchOrgsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<OrgSdkDto>>> {
+    async searchOrgsRaw(requestParameters: SearchOrgsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<EndaomentSdkOrg>>> {
         const queryParameters: any = {};
 
         if (requestParameters.searchTerm !== undefined) {
@@ -263,14 +263,14 @@ export class EndaomentSdkApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(OrgSdkDtoFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(EndaomentSdkOrgFromJSON));
     }
 
     /**
      * Note: If using multiple parameters, the search will perform an AND operation of all inputs
      * Get a list of Endaoment Orgs, filtered by search parameters
      */
-    async searchOrgs(requestParameters: SearchOrgsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<OrgSdkDto>> {
+    async searchOrgs(requestParameters: SearchOrgsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<EndaomentSdkOrg>> {
         const response = await this.searchOrgsRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -279,7 +279,7 @@ export class EndaomentSdkApi extends runtime.BaseAPI {
      * Only community and transparent funds will be returned
      * Get a list of Endaoment Funds, filtered by search paramenter
      */
-    async searchVisibleFundsRaw(requestParameters: SearchVisibleFundsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<FundSdkDto>>> {
+    async searchVisibleFundsRaw(requestParameters: SearchVisibleFundsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<EndaomentSdkFund>>> {
         if (requestParameters.name === null || requestParameters.name === undefined) {
             throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling searchVisibleFunds.');
         }
@@ -307,14 +307,14 @@ export class EndaomentSdkApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(FundSdkDtoFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(EndaomentSdkFundFromJSON));
     }
 
     /**
      * Only community and transparent funds will be returned
      * Get a list of Endaoment Funds, filtered by search paramenter
      */
-    async searchVisibleFunds(requestParameters: SearchVisibleFundsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<FundSdkDto>> {
+    async searchVisibleFunds(requestParameters: SearchVisibleFundsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<EndaomentSdkFund>> {
         const response = await this.searchVisibleFundsRaw(requestParameters, initOverrides);
         return await response.value();
     }

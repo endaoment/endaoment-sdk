@@ -1,4 +1,4 @@
-import { EndaomentSdkApi, EndaomentSdkFund, EndaomentSdkOrg } from '@endaoment/sdk';
+import { EndaomentSdkApi, NdaoSdkFund, NdaoSdkOrg } from '@endaoment/sdk';
 
 import { useState } from 'react';
 import parse from 'html-react-parser';
@@ -34,7 +34,7 @@ function Discoverability({ sdk }: { sdk: EndaomentSdkApi }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchingForOrgs, setSearchingForOrgs] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [searchedEntities, setSearchedEntities] = useState<(EndaomentSdkFund | EndaomentSdkOrg)[]>();
+  const [searchedEntities, setSearchedEntities] = useState<(NdaoSdkFund | NdaoSdkOrg)[]>();
 
   const handleChangeEntityType = () => {
     setSearchingForOrgs(!searchingForOrgs);

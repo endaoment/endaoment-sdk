@@ -1,4 +1,4 @@
-import { EndaomentSdkApi, EndaomentSdkOrg, EndaomentSdkTransaction } from '@endaoment/sdk';
+import { EndaomentSdkApi, NdaoSdkOrg, NdaoSdkTransaction } from '@endaoment/sdk';
 
 import { useState } from 'react';
 import {
@@ -19,10 +19,10 @@ import { usePrepareSendTransaction, useSendTransaction } from 'wagmi';
 
 function EntityDeploy({ sdk }: { sdk: EndaomentSdkApi }) {
   const [searchTerm, setSearchTerm] = useState('');
-  const [undeployedOrgs, setUndeployedOrgs] = useState<EndaomentSdkOrg[]>([]);
-  const [orgToDeploy, setOrgToDeploy] = useState<EndaomentSdkOrg>();
+  const [undeployedOrgs, setUndeployedOrgs] = useState<NdaoSdkOrg[]>([]);
+  const [orgToDeploy, setOrgToDeploy] = useState<NdaoSdkOrg>();
   const [loading, setLoading] = useState(false);
-  const [deployTransaction, setDeployTransaction] = useState<EndaomentSdkTransaction>();
+  const [deployTransaction, setDeployTransaction] = useState<NdaoSdkTransaction>();
   const { config, error } = usePrepareSendTransaction({
     enabled: !!deployTransaction,
     request: { to: deployTransaction?.to as string, data: deployTransaction?.data as string },
@@ -37,7 +37,7 @@ function EntityDeploy({ sdk }: { sdk: EndaomentSdkApi }) {
     setSearchTerm('');
   };
 
-  const handleGetDeploymentData = async (org: EndaomentSdkOrg) => {
+  const handleGetDeploymentData = async (org: NdaoSdkOrg) => {
     setOrgToDeploy(org);
     setDeployTransaction(await sdk.getOrgDeployTransaction(org));
   };

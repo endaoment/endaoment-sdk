@@ -1,4 +1,4 @@
-import { DonationSwapDto, EndaomentSdkApi } from '@endaoment/sdk';
+import { EndaomentSdkApi, NdaoSdkDonationSwap } from '@endaoment/sdk';
 
 import { useState } from 'react';
 import {
@@ -52,7 +52,7 @@ function CharitableGiving({ sdk }: { sdk: EndaomentSdkApi }) {
   const [amountIn, setAmountIn] = useState('');
   const [exp, setExp] = useState(1e18);
   const [loading, setLoading] = useState(false);
-  const [swapAndDonateTransaction, setSwapAndDonateTransaction] = useState<DonationSwapDto>();
+  const [swapAndDonateTransaction, setSwapAndDonateTransaction] = useState<NdaoSdkDonationSwap>();
   const { config, error } = usePrepareSendTransaction({
     request: {
       to: swapAndDonateTransaction?.to as string,

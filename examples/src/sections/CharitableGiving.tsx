@@ -19,6 +19,7 @@ import { ChevronRightIcon, InfoIcon } from '@chakra-ui/icons';
 import { usePrepareSendTransaction, useSendTransaction } from 'wagmi';
 import NumberFormatter from 'react-currency-format';
 
+// Forked mainnet and goerli addresses
 const TOKENS = [
   {
     symbol: 'ETH',
@@ -28,20 +29,20 @@ const TOKENS = [
   {
     symbol: 'WETH',
     decimals: 18,
-    contractAddress: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
-    // contractAddress: '0xb4fbf271143f4fbf7b91a5ded31805e42b2208d6',
+    // contractAddress: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+    contractAddress: '0xb4fbf271143f4fbf7b91a5ded31805e42b2208d6',
   },
   {
     symbol: 'USDC',
     decimals: 6,
-    contractAddress: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
-    // contractAddress: '0x2f3A40A3db8a7e3D09B0adfEfbCe4f6F81927557',
+    // contractAddress: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
+    contractAddress: '0x2f3A40A3db8a7e3D09B0adfEfbCe4f6F81927557',
   },
   {
     symbol: 'LINK',
     decimals: 18,
-    contractAddress: '0x514910771AF9Ca656af840dff83E8264EcF986CA',
-    // contractAddress: '0x326C977E6efc84E512bB9C30f76E30c160eD06FB',
+    // contractAddress: '0x514910771AF9Ca656af840dff83E8264EcF986CA',
+    contractAddress: '0x326C977E6efc84E512bB9C30f76E30c160eD06FB',
   },
 ];
 

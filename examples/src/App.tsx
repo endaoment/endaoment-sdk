@@ -19,8 +19,8 @@ import CharitableGiving from './sections/CharitableGiving';
 import Discoverability from './sections/Discoverability';
 import EntityDeploy from './sections/EntityDeploy';
 
-// const config = new Configuration({ network: 'goerli' });
-const config = new Configuration({ network: 'local' });
+const config = new Configuration({ network: 'goerli' });
+// const config = new Configuration({ network: 'local' });
 const sdk = new EndaomentSdkApi(config);
 
 const CustomTabPanel = ({

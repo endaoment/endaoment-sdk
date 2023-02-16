@@ -13,7 +13,6 @@ import {
   NumberInputField,
   ListItem,
   UnorderedList,
-  HStack,
 } from '@chakra-ui/react';
 import { ChevronRightIcon, InfoIcon } from '@chakra-ui/icons';
 import { usePrepareSendTransaction, useSendTransaction } from 'wagmi';

@@ -1,6 +1,20 @@
-import { Container, Heading, Tabs, TabList, Tab, TabPanels, TabPanel, Text, Divider, Flex } from '@chakra-ui/react';
+import {
+  Container,
+  Heading,
+  Tabs,
+  TabList,
+  Tab,
+  TabPanels,
+  TabPanel,
+  Text,
+  Divider,
+  Flex,
+  VStack,
+} from '@chakra-ui/react';
 import { Configuration, EndaomentSdkApi } from '@endaoment/sdk';
 import { ConnectKitButton } from 'connectkit';
+import { useNetwork } from 'wagmi';
+import CharitableGiving from './sections/CharitableGiving';
 
 import Discoverability from './sections/Discoverability';
 import EntityDeploy from './sections/EntityDeploy';
@@ -31,11 +45,20 @@ const CustomTabPanel = ({
 );
 
 function App() {
+  const { chain } = useNetwork();
+
   return (
     <Container maxW="4xl" p="4" mt="16">
       <Flex justifyContent="space-between" alignItems="center" mb={8}>
         <Heading size="md">Endaoment SDK</Heading>
-        <ConnectKitButton theme="soft" />
+        <VStack spacing="1">
+          <ConnectKitButton theme="soft" />
+          {chain && (
+            <Text fontSize="xs">
+              Chain: {chain.name} ({chain.id})
+            </Text>
+          )}
+        </VStack>
       </Flex>
 
       <Tabs variant="enclosed-colored">
@@ -73,7 +96,7 @@ function App() {
             title="Donating to Endaoment Entities"
             description="Easily get token quotes and donate to your favorite org or fund"
           >
-            <></>
+            <CharitableGiving sdk={sdk} />
           </CustomTabPanel>
 
           <CustomTabPanel title="Stats for Endaoment Entities" description="..">

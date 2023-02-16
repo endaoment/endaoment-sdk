@@ -4,12 +4,10 @@ import { configureChains, createClient, WagmiConfig } from 'wagmi';
 import { goerli, foundry } from 'wagmi/chains';
 import { ConnectKitProvider, getDefaultClient } from 'connectkit';
 import { publicProvider } from 'wagmi/providers/public';
-// import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 import { ChakraProvider } from '@chakra-ui/react';
 import App from './App';
 
-// const { chains } = configureChains([goerli], [publicProvider()]);
-const { chains } = configureChains([foundry], [publicProvider()]);
+const { chains } = configureChains([goerli, foundry], [publicProvider()]);
 
 const client = createClient(getDefaultClient({ appName: 'Endaoment SDK Examples', chains }));
 

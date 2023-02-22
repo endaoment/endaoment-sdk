@@ -16,33 +16,33 @@ import { exists, mapValues } from '../runtime';
 /**
  * Quote information for this swap
  * @export
- * @interface DonationSwapDtoQuote
+ * @interface NdaoSdkDonationSwapQuote
  */
-export interface DonationSwapDtoQuote {
+export interface NdaoSdkDonationSwapQuote {
     /**
      * The price impact this swap will produce
      * @type {number}
-     * @memberof DonationSwapDtoQuote
+     * @memberof NdaoSdkDonationSwapQuote
      */
     priceImpact: number;
     /**
      * The expected output for this swap
      * @type {string}
-     * @memberof DonationSwapDtoQuote
+     * @memberof NdaoSdkDonationSwapQuote
      */
     expectedUsdc: string;
     /**
      * The minimum value this swap will output
      * @type {string}
-     * @memberof DonationSwapDtoQuote
+     * @memberof NdaoSdkDonationSwapQuote
      */
     minimumTolerableUsdc: string;
 }
 
 /**
- * Check if a given object implements the DonationSwapDtoQuote interface.
+ * Check if a given object implements the NdaoSdkDonationSwapQuote interface.
  */
-export function instanceOfDonationSwapDtoQuote(value: object): boolean {
+export function instanceOfNdaoSdkDonationSwapQuote(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "priceImpact" in value;
     isInstance = isInstance && "expectedUsdc" in value;
@@ -51,11 +51,11 @@ export function instanceOfDonationSwapDtoQuote(value: object): boolean {
     return isInstance;
 }
 
-export function DonationSwapDtoQuoteFromJSON(json: any): DonationSwapDtoQuote {
-    return DonationSwapDtoQuoteFromJSONTyped(json, false);
+export function NdaoSdkDonationSwapQuoteFromJSON(json: any): NdaoSdkDonationSwapQuote {
+    return NdaoSdkDonationSwapQuoteFromJSONTyped(json, false);
 }
 
-export function DonationSwapDtoQuoteFromJSONTyped(json: any, ignoreDiscriminator: boolean): DonationSwapDtoQuote {
+export function NdaoSdkDonationSwapQuoteFromJSONTyped(json: any, ignoreDiscriminator: boolean): NdaoSdkDonationSwapQuote {
     if ((json === undefined) || (json === null)) {
         return json;
     }
@@ -67,7 +67,7 @@ export function DonationSwapDtoQuoteFromJSONTyped(json: any, ignoreDiscriminator
     };
 }
 
-export function DonationSwapDtoQuoteToJSON(value?: DonationSwapDtoQuote | null): any {
+export function NdaoSdkDonationSwapQuoteToJSON(value?: NdaoSdkDonationSwapQuote | null): any {
     if (value === undefined) {
         return undefined;
     }

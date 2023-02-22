@@ -1,8 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
-export * from './DonationSwapDto';
-export * from './DonationSwapDtoQuote';
-export * from './FundDto';
-export * from './OrgDto';
-export * from './SwapQuote';
-export * from './TransactionDto';
+export * from './NdaoSdkDonationSwap';
+export * from './NdaoSdkDonationSwapQuote';
+export * from './NdaoSdkFund';
+export * from './NdaoSdkOrg';
+export * from './NdaoSdkTransaction';

@@ -16,33 +16,33 @@ import { exists, mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface TransactionDto
+ * @interface NdaoSdkTransaction
  */
-export interface TransactionDto {
+export interface NdaoSdkTransaction {
     /**
      * The address this transaction will be sent to
      * @type {string}
-     * @memberof TransactionDto
+     * @memberof NdaoSdkTransaction
      */
     to: string;
     /**
      * The data this transaction will send to the destination contract
      * @type {string}
-     * @memberof TransactionDto
+     * @memberof NdaoSdkTransaction
      */
     data: string;
     /**
      * The ETH value, if any, this transaction will send along
      * @type {string}
-     * @memberof TransactionDto
+     * @memberof NdaoSdkTransaction
      */
     value: string;
 }
 
 /**
- * Check if a given object implements the TransactionDto interface.
+ * Check if a given object implements the NdaoSdkTransaction interface.
  */
-export function instanceOfTransactionDto(value: object): boolean {
+export function instanceOfNdaoSdkTransaction(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "to" in value;
     isInstance = isInstance && "data" in value;
@@ -51,11 +51,11 @@ export function instanceOfTransactionDto(value: object): boolean {
     return isInstance;
 }
 
-export function TransactionDtoFromJSON(json: any): TransactionDto {
-    return TransactionDtoFromJSONTyped(json, false);
+export function NdaoSdkTransactionFromJSON(json: any): NdaoSdkTransaction {
+    return NdaoSdkTransactionFromJSONTyped(json, false);
 }
 
-export function TransactionDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean): TransactionDto {
+export function NdaoSdkTransactionFromJSONTyped(json: any, ignoreDiscriminator: boolean): NdaoSdkTransaction {
     if ((json === undefined) || (json === null)) {
         return json;
     }
@@ -67,7 +67,7 @@ export function TransactionDtoFromJSONTyped(json: any, ignoreDiscriminator: bool
     };
 }
 
-export function TransactionDtoToJSON(value?: TransactionDto | null): any {
+export function NdaoSdkTransactionToJSON(value?: NdaoSdkTransaction | null): any {
     if (value === undefined) {
         return undefined;
     }

@@ -13,49 +13,49 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { DonationSwapDtoQuote } from './DonationSwapDtoQuote';
+import type { NdaoSdkDonationSwapQuote } from './NdaoSdkDonationSwapQuote';
 import {
-    DonationSwapDtoQuoteFromJSON,
-    DonationSwapDtoQuoteFromJSONTyped,
-    DonationSwapDtoQuoteToJSON,
-} from './DonationSwapDtoQuote';
+    NdaoSdkDonationSwapQuoteFromJSON,
+    NdaoSdkDonationSwapQuoteFromJSONTyped,
+    NdaoSdkDonationSwapQuoteToJSON,
+} from './NdaoSdkDonationSwapQuote';
 
 /**
  * 
  * @export
- * @interface DonationSwapDto
+ * @interface NdaoSdkDonationSwap
  */
-export interface DonationSwapDto {
+export interface NdaoSdkDonationSwap {
     /**
      * The address this transaction will be sent to
      * @type {string}
-     * @memberof DonationSwapDto
+     * @memberof NdaoSdkDonationSwap
      */
     to: string;
     /**
      * The data this transaction will send to the destination contract
      * @type {string}
-     * @memberof DonationSwapDto
+     * @memberof NdaoSdkDonationSwap
      */
     data: string;
     /**
      * The ETH value, if any, this transaction will send along. This value will only be > 0 if performing an ETH donation
      * @type {string}
-     * @memberof DonationSwapDto
+     * @memberof NdaoSdkDonationSwap
      */
     value: string;
     /**
      * 
-     * @type {DonationSwapDtoQuote}
-     * @memberof DonationSwapDto
+     * @type {NdaoSdkDonationSwapQuote}
+     * @memberof NdaoSdkDonationSwap
      */
-    quote: DonationSwapDtoQuote;
+    quote: NdaoSdkDonationSwapQuote;
 }
 
 /**
- * Check if a given object implements the DonationSwapDto interface.
+ * Check if a given object implements the NdaoSdkDonationSwap interface.
  */
-export function instanceOfDonationSwapDto(value: object): boolean {
+export function instanceOfNdaoSdkDonationSwap(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "to" in value;
     isInstance = isInstance && "data" in value;
@@ -65,11 +65,11 @@ export function instanceOfDonationSwapDto(value: object): boolean {
     return isInstance;
 }
 
-export function DonationSwapDtoFromJSON(json: any): DonationSwapDto {
-    return DonationSwapDtoFromJSONTyped(json, false);
+export function NdaoSdkDonationSwapFromJSON(json: any): NdaoSdkDonationSwap {
+    return NdaoSdkDonationSwapFromJSONTyped(json, false);
 }
 
-export function DonationSwapDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean): DonationSwapDto {
+export function NdaoSdkDonationSwapFromJSONTyped(json: any, ignoreDiscriminator: boolean): NdaoSdkDonationSwap {
     if ((json === undefined) || (json === null)) {
         return json;
     }
@@ -78,11 +78,11 @@ export function DonationSwapDtoFromJSONTyped(json: any, ignoreDiscriminator: boo
         'to': json['to'],
         'data': json['data'],
         'value': json['value'],
-        'quote': DonationSwapDtoQuoteFromJSON(json['quote']),
+        'quote': NdaoSdkDonationSwapQuoteFromJSON(json['quote']),
     };
 }
 
-export function DonationSwapDtoToJSON(value?: DonationSwapDto | null): any {
+export function NdaoSdkDonationSwapToJSON(value?: NdaoSdkDonationSwap | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -94,7 +94,7 @@ export function DonationSwapDtoToJSON(value?: DonationSwapDto | null): any {
         'to': value.to,
         'data': value.data,
         'value': value.value,
-        'quote': DonationSwapDtoQuoteToJSON(value.quote),
+        'quote': NdaoSdkDonationSwapQuoteToJSON(value.quote),
     };
 }
 

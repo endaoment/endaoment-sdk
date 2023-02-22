@@ -16,51 +16,51 @@ import { exists, mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface FundDto
+ * @interface NdaoSdkFund
  */
-export interface FundDto {
+export interface NdaoSdkFund {
     /**
      * The fund's Endaoment id
      * @type {string}
-     * @memberof FundDto
+     * @memberof NdaoSdkFund
      */
     id: string;
     /**
      * The fund's name
      * @type {string}
-     * @memberof FundDto
+     * @memberof NdaoSdkFund
      */
     name: string;
     /**
      * The fund's contract address
      * @type {string}
-     * @memberof FundDto
+     * @memberof NdaoSdkFund
      */
     contractAddress: string;
     /**
      * The fund's logo url
      * @type {string}
-     * @memberof FundDto
+     * @memberof NdaoSdkFund
      */
     logoUrl: string | null;
     /**
      * The fund's description
      * @type {string}
-     * @memberof FundDto
+     * @memberof NdaoSdkFund
      */
     description: string;
     /**
      * The fund's Endaoment url
      * @type {string}
-     * @memberof FundDto
+     * @memberof NdaoSdkFund
      */
     endaomentUrl: string;
 }
 
 /**
- * Check if a given object implements the FundDto interface.
+ * Check if a given object implements the NdaoSdkFund interface.
  */
-export function instanceOfFundDto(value: object): boolean {
+export function instanceOfNdaoSdkFund(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "id" in value;
     isInstance = isInstance && "name" in value;
@@ -72,11 +72,11 @@ export function instanceOfFundDto(value: object): boolean {
     return isInstance;
 }
 
-export function FundDtoFromJSON(json: any): FundDto {
-    return FundDtoFromJSONTyped(json, false);
+export function NdaoSdkFundFromJSON(json: any): NdaoSdkFund {
+    return NdaoSdkFundFromJSONTyped(json, false);
 }
 
-export function FundDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean): FundDto {
+export function NdaoSdkFundFromJSONTyped(json: any, ignoreDiscriminator: boolean): NdaoSdkFund {
     if ((json === undefined) || (json === null)) {
         return json;
     }
@@ -91,7 +91,7 @@ export function FundDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean): F
     };
 }
 
-export function FundDtoToJSON(value?: FundDto | null): any {
+export function NdaoSdkFundToJSON(value?: NdaoSdkFund | null): any {
     if (value === undefined) {
         return undefined;
     }

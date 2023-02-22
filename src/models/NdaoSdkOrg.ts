@@ -16,69 +16,69 @@ import { exists, mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface OrgDto
+ * @interface NdaoSdkOrg
  */
-export interface OrgDto {
+export interface NdaoSdkOrg {
     /**
      * The org's Endaoment id
      * @type {string}
-     * @memberof OrgDto
+     * @memberof NdaoSdkOrg
      */
     id: string;
     /**
      * The org's name
      * @type {string}
-     * @memberof OrgDto
+     * @memberof NdaoSdkOrg
      */
     name: string;
     /**
      * The org's EIN
      * @type {string}
-     * @memberof OrgDto
+     * @memberof NdaoSdkOrg
      */
     ein: string;
     /**
      * The org's contract address
      * @type {string}
-     * @memberof OrgDto
+     * @memberof NdaoSdkOrg
      */
     contractAddress: string;
     /**
      * The org's logo url
      * @type {string}
-     * @memberof OrgDto
+     * @memberof NdaoSdkOrg
      */
     logoUrl: string;
     /**
      * The org's NTEE code
      * @type {string}
-     * @memberof OrgDto
+     * @memberof NdaoSdkOrg
      */
     nteeCode: string;
     /**
      * The org's NTEE description
      * @type {string}
-     * @memberof OrgDto
+     * @memberof NdaoSdkOrg
      */
     nteeDescription: string;
     /**
      * The org's description
      * @type {string}
-     * @memberof OrgDto
+     * @memberof NdaoSdkOrg
      */
     description: string | null;
     /**
      * The org's Endaoment url
      * @type {string}
-     * @memberof OrgDto
+     * @memberof NdaoSdkOrg
      */
     endaomentUrl: string;
 }
 
 /**
- * Check if a given object implements the OrgDto interface.
+ * Check if a given object implements the NdaoSdkOrg interface.
  */
-export function instanceOfOrgDto(value: object): boolean {
+export function instanceOfNdaoSdkOrg(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "id" in value;
     isInstance = isInstance && "name" in value;
@@ -93,11 +93,11 @@ export function instanceOfOrgDto(value: object): boolean {
     return isInstance;
 }
 
-export function OrgDtoFromJSON(json: any): OrgDto {
-    return OrgDtoFromJSONTyped(json, false);
+export function NdaoSdkOrgFromJSON(json: any): NdaoSdkOrg {
+    return NdaoSdkOrgFromJSONTyped(json, false);
 }
 
-export function OrgDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean): OrgDto {
+export function NdaoSdkOrgFromJSONTyped(json: any, ignoreDiscriminator: boolean): NdaoSdkOrg {
     if ((json === undefined) || (json === null)) {
         return json;
     }
@@ -115,7 +115,7 @@ export function OrgDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean): Or
     };
 }
 
-export function OrgDtoToJSON(value?: OrgDto | null): any {
+export function NdaoSdkOrgToJSON(value?: NdaoSdkOrg | null): any {
     if (value === undefined) {
         return undefined;
     }

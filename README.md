@@ -6,15 +6,15 @@
 
 <div align="center">
   <h1>Endaoment SDK</h1>
+  <a href="https://docs.endaoment.org/developers">
+    <img src="https://img.shields.io/static/v1?label=&message=Documentation&colorA=E4EBF4&colorB=E4EBF4&style=flat&logo=gitbook" alt="Gitbook">
+  </a>
   <a href="https://www.npmjs.com/package/@endaoment/sdk">
     <img src="https://img.shields.io/npm/v/@endaoment/sdk?colorA=53ACDE&colorB=161b22&style=flat" alt="Version">
   </a>
   <a href="https://www.npmjs.com/package/@endaoment/sdk">
     <img src="https://img.shields.io/npm/dm/@endaoment/sdk?colorA=EA6B0E&colorB=161b22&style=flat" alt="Downloads per month">
   </a>
-        <a href="https://docs.endaoment.org">
-        <img src="https://img.shields.io/static/v1?label=&message=Documentation&colorA=E4EBF4&colorB=E4EBF4&style=flat&logo=gitbook" alt="Gitbook">
-        </a>
   <br/>
     <a href="https://twitter.com/endaomentdotorg">
     <img src="https://img.shields.io/twitter/url.svg?label=%40endaomentdotorg&style=social&url=https%3A%2F%2Ftwitter.com%2Fendaomentdotorg" alt="@endaomentdotorg">

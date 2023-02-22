@@ -7,18 +7,21 @@
 <div align="center">
   <h1>Endaoment SDK</h1>
   <a href="https://www.npmjs.com/package/@endaoment/sdk">
-    <img src="https://img.shields.io/npm/v/@endaoment/sdk?colorA=E21616&colorB=161b22&style=flat" alt="Version">
+    <img src="https://img.shields.io/npm/v/@endaoment/sdk?colorA=53ACDE&colorB=161b22&style=flat" alt="Version">
   </a>
   <a href="https://www.npmjs.com/package/@endaoment/sdk">
     <img src="https://img.shields.io/npm/dm/@endaoment/sdk?colorA=EA6B0E&colorB=161b22&style=flat" alt="Downloads per month">
   </a>
+        <a href="https://docs.endaoment.org">
+        <img src="https://img.shields.io/static/v1?label=&message=Documentation&colorA=E4EBF4&colorB=E4EBF4&style=flat&logo=gitbook" alt="Gitbook">
+        </a>
   <br/>
     <a href="https://twitter.com/endaomentdotorg">
     <img src="https://img.shields.io/twitter/url.svg?label=%40endaomentdotorg&style=social&url=https%3A%2F%2Ftwitter.com%2Fendaomentdotorg" alt="@endaomentdotorg">
       <a href="https://discord.gg/endaoment">
         <img alt="Discord" src="https://img.shields.io/discord/734855436276334746?color=7389D8&label&logo=discord&logoColor=ffffff" />
         </a>
-        <a href="https://https://etherscan.io/address/0xbe21e4cf884c8b2517e4e199487f8b505841cb36">
+        <a href="https://etherscan.io/address/0xbe21e4cf884c8b2517e4e199487f8b505841cb36">
         <img src="https://img.shields.io/static/v1?label=ENS&message=endaoment.eth&colorA=696F8C&colorB=696F8C&style=flat&logo=ethereum" alt="endaoment.eth">
         </a>
   </a>

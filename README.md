@@ -1,30 +1,47 @@
-# Endaoment SDK
+<a href="https://developers.endaoment.org/" target="_blank" rel="noopener">
+  <picture>
+    <img alt="Endaoment developers" src="https://storage.googleapis.com/endaoment-static/readme-assets/sdk-readme-cover.png" />
+  </picture>
+</a>
 
 <div align="center">
+  <h1>Endaoment SDK</h1>
   <a href="https://www.npmjs.com/package/@endaoment/sdk">
-    <img src="https://img.shields.io/npm/v/@endaoment/sdk?colorA=21262d&colorB=161b22&style=flat" alt="Version">
+    <img src="https://img.shields.io/npm/v/@endaoment/sdk?colorA=E21616&colorB=161b22&style=flat" alt="Version">
   </a>
   <a href="https://www.npmjs.com/package/@endaoment/sdk">
-    <img src="https://img.shields.io/npm/dm/@endaoment/sdk?colorA=21262d&colorB=161b22&style=flat" alt="Downloads per month">
+    <img src="https://img.shields.io/npm/dm/@endaoment/sdk?colorA=EA6B0E&colorB=161b22&style=flat" alt="Downloads per month">
   </a>
+  <br/>
+    <a href="https://twitter.com/endaomentdotorg">
+    <img src="https://img.shields.io/twitter/url.svg?label=%40endaomentdotorg&style=social&url=https%3A%2F%2Ftwitter.com%2Fendaomentdotorg" alt="@endaomentdotorg">
+      <a href="https://discord.gg/endaoment">
+        <img alt="Discord" src="https://img.shields.io/discord/734855436276334746?color=7389D8&label&logo=discord&logoColor=ffffff" />
+        </a>
+        <a href="https://https://etherscan.io/address/0xbe21e4cf884c8b2517e4e199487f8b505841cb36">
+        <img src="https://img.shields.io/static/v1?label=ENS&message=endaoment.eth&colorA=696F8C&colorB=696F8C&style=flat&logo=ethereum" alt="endaoment.eth">
+        </a>
+  </a>
+  <br/><br/>
 </div>
+
 
 This repository contains the SDK for developers to utilize in order to easily assemble blockchain calls to interact with the endaoment ecosystem as well as interface with Endaoment APIs in order to fetch information on Organizations.
 
 This TypeScript/JavaScript client utilizes [Fetch API](https://fetch.spec.whatwg.org/). The module can be used in the following environments:
 
-Environment
+**:earth_americas: Environment**
 
 - Node.js
 - Webpack
 - Browserify
 
-Language level
+**:speaking_head: Language level**
 
 - ES5 - you must have a Promises/A+ library installed
 - ES6
 
-Module system
+**:gear: Module system**
 
 - CommonJS
 - ES6 module system

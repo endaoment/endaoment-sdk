@@ -65,9 +65,7 @@ function App() {
         <TabList>
           <Tab>Discoverability</Tab>
           <Tab>Org Deployment</Tab>
-          <Tab>Financials</Tab>
           <Tab>Charitable Giving</Tab>
-          <Tab>Stats</Tab>
         </TabList>
 
         <TabPanels>
@@ -86,21 +84,10 @@ function App() {
           </CustomTabPanel>
 
           <CustomTabPanel
-            title="Entity Financial Standings"
-            description="Find orgs and proportionally payout for QF and other charitable events. Find orgs with low donation count and help out! ---> BLOCKED by Subgraph"
-          >
-            <></>
-          </CustomTabPanel>
-
-          <CustomTabPanel
             title="Donating to Endaoment Entities"
             description="Easily get token quotes and donate to your favorite org or fund"
           >
             <CharitableGiving sdk={sdk} />
-          </CustomTabPanel>
-
-          <CustomTabPanel title="Stats for Endaoment Entities" description="..">
-            <></>
           </CustomTabPanel>
         </TabPanels>
       </Tabs>

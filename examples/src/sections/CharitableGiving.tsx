@@ -13,6 +13,8 @@ import {
   NumberInputField,
   ListItem,
   UnorderedList,
+  InputGroup,
+  InputLeftAddon,
 } from '@chakra-ui/react';
 import { ChevronRightIcon, InfoIcon } from '@chakra-ui/icons';
 import { usePrepareSendTransaction, useSendTransaction } from 'wagmi';
@@ -42,18 +44,16 @@ const TOKENS = [
   },
 ];
 
-const EIN = '844661797';
-const ORG_CONTRACT_ADDRESS = '0x7ecc1d4936a973ec3b153c0c713e0f71c59abf53';
-
 function CharitableGiving({ sdk }: { sdk: EndaomentSdkApi }) {
+  const [ein, setEin] = useState('844661797');
   const [selectedToken, setSelectedToken] = useState(TOKENS[0]);
-  const [amountIn, setAmountIn] = useState('');
+  const [amountIn, setAmountIn] = useState('1');
   const [exp, setExp] = useState(1e18);
   const [loading, setLoading] = useState(false);
   const [swapAndDonateTransaction, setSwapAndDonateTransaction] = useState<NdaoSdkDonationSwap>();
   const { config, error } = usePrepareSendTransaction({
     request: {
-      to: ORG_CONTRACT_ADDRESS,
+      to: swapAndDonateTransaction?.to as string,
       data: swapAndDonateTransaction?.data as string,
       value: swapAndDonateTransaction?.value as string,
       gasLimit: 500_000,
@@ -66,11 +66,10 @@ function CharitableGiving({ sdk }: { sdk: EndaomentSdkApi }) {
     setLoading(true);
     setSwapAndDonateTransaction({
       ...(await sdk.getDonationSwapTransaction({
-        ein: EIN,
+        ein,
         tokenContractAddress: selectedToken.contractAddress,
         amountIn: `${+amountIn * +exp}`,
       })),
-      to: ORG_CONTRACT_ADDRESS,
     });
     setLoading(false);
   };
@@ -84,11 +83,20 @@ function CharitableGiving({ sdk }: { sdk: EndaomentSdkApi }) {
 
   return (
     <>
-      <Text mb="4">
-        <ChevronRightIcon /> This example donates tokens to Endaoment's Org - EIN {EIN}
-      </Text>
-      <Flex alignItems="center" gap="4">
+      <Flex gap="4">
         <VStack flex="2">
+          <InputGroup>
+            <InputLeftAddon children="Deployed Org EIN" />
+            <NumberInput
+              onChange={(v) => setEin(v)}
+              value={ein}
+              onKeyDown={(e) => e.key === 'Enter' && handleGetTransactionData()}
+              w="100%"
+            >
+              <NumberInputField placeholder="EIN" />
+            </NumberInput>
+          </InputGroup>
+
           <Select
             value={selectedToken.contractAddress}
             onChange={(v) => setSelectedToken(TOKENS.find((t) => t.contractAddress === v.target.value)!)}

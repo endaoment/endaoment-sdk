@@ -19,6 +19,7 @@ import CharitableGiving from './sections/CharitableGiving';
 import Discoverability from './sections/Discoverability';
 import EntityDeploy from './sections/EntityDeploy';
 
+// const config = new Configuration({ network: 'local' });
 const config = new Configuration({ network: 'mainnet' });
 const sdk = new EndaomentSdkApi(config);
 
@@ -49,7 +50,7 @@ function App() {
   return (
     <Container maxW="4xl" p="4" mt="16">
       <Flex justifyContent="space-between" alignItems="center" mb={8}>
-        <Heading size="md">Endaoment SDK</Heading>
+        <Heading size="md">Endaoment SDK - Examples</Heading>
         <VStack spacing="1">
           <ConnectKitButton theme="soft" />
           {chain && (

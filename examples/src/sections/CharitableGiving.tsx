@@ -64,13 +64,14 @@ function CharitableGiving({ sdk }: { sdk: EndaomentSdkApi }) {
 
   const handleGetTransactionData = async () => {
     setLoading(true);
-    setSwapAndDonateTransaction(
-      await sdk.getDonationSwapTransaction({
+    setSwapAndDonateTransaction({
+      ...(await sdk.getDonationSwapTransaction({
         ein: EIN,
         tokenContractAddress: selectedToken.contractAddress,
         amountIn: `${+amountIn * +exp}`,
-      }),
-    );
+      })),
+      to: ORG_CONTRACT_ADDRESS,
+    });
     setLoading(false);
   };
 

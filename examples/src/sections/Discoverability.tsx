@@ -112,25 +112,26 @@ function Discoverability({ sdk }: { sdk: EndaomentSdkApi }) {
                 </Flex>
 
                 <Flex mt="2" justifyContent="space-between">
-                  {!!entity.contractAddress ? (
-                    <HStack>
-                      <Tooltip label={entity.contractAddress}>
-                        <Tag>
-                          {entity.contractAddress.slice(0, 5)}...{entity.contractAddress.slice(-3)}
-                        </Tag>
-                      </Tooltip>
-                      <Tooltip label="Copy Contract Address">
-                        <IconButton
-                          onClick={() => navigator.clipboard.writeText(entity.contractAddress)}
-                          icon={<CopyIcon />}
-                          aria-label="Copy Contract Address"
-                          size="xs"
-                        />
-                      </Tooltip>
-                    </HStack>
-                  ) : (
-                    <span />
-                  )}
+                  <HStack>
+                    <Text>{'ein' in entity ? `EIN ${entity.ein}` : ''}</Text>
+                    {!!entity.contractAddress && (
+                      <>
+                        <Tooltip label={entity.contractAddress}>
+                          <Tag>
+                            {entity.contractAddress.slice(0, 5)}...{entity.contractAddress.slice(-3)}
+                          </Tag>
+                        </Tooltip>
+                        <Tooltip label="Copy Contract Address">
+                          <IconButton
+                            onClick={() => navigator.clipboard.writeText(entity.contractAddress)}
+                            icon={<CopyIcon />}
+                            aria-label="Copy Contract Address"
+                            size="xs"
+                          />
+                        </Tooltip>
+                      </>
+                    )}
+                  </HStack>
 
                   <VStack>
                     <Link href={entity.endaomentUrl} target="_blank">

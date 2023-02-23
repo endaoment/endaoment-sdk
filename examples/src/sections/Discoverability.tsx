@@ -112,7 +112,7 @@ function Discoverability({ sdk }: { sdk: EndaomentSdkApi }) {
                 </Flex>
 
                 <Flex mt="2" justifyContent="space-between">
-                  {entity.contractAddress && (
+                  {!!entity.contractAddress ? (
                     <HStack>
                       <Tooltip label={entity.contractAddress}>
                         <Tag>
@@ -128,16 +128,19 @@ function Discoverability({ sdk }: { sdk: EndaomentSdkApi }) {
                         />
                       </Tooltip>
                     </HStack>
+                  ) : (
+                    <span />
                   )}
-                  {!entity.contractAddress && <span />}
 
                   <VStack>
                     <Link href={entity.endaomentUrl} target="_blank">
                       Endaoment <ExternalLinkIcon />
                     </Link>
-                    <Link href={`https://etherscan.io/address/${entity.contractAddress}`} target="_blank" ml="1">
-                      Etherscan <ExternalLinkIcon />
-                    </Link>
+                    {entity.contractAddress && (
+                      <Link href={`https://etherscan.io/address/${entity.contractAddress}`} target="_blank" ml="1">
+                        Etherscan <ExternalLinkIcon />
+                      </Link>
+                    )}
                   </VStack>
                 </Flex>
               </AccordionPanel>

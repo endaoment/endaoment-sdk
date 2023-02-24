@@ -277,7 +277,7 @@ export class EndaomentSdkApi extends runtime.BaseAPI {
 
     /**
      * Only community and transparent funds will be returned
-     * Get a list of Endaoment Funds, filtered by search paramenter
+     * Get a list of Endaoment Funds, filtered by search parameter
      */
     async searchVisibleFundsRaw(requestParameters: SearchVisibleFundsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<NdaoSdkFund>>> {
         if (requestParameters.name === null || requestParameters.name === undefined) {
@@ -312,7 +312,7 @@ export class EndaomentSdkApi extends runtime.BaseAPI {
 
     /**
      * Only community and transparent funds will be returned
-     * Get a list of Endaoment Funds, filtered by search paramenter
+     * Get a list of Endaoment Funds, filtered by search parameter
      */
     async searchVisibleFunds(requestParameters: SearchVisibleFundsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<NdaoSdkFund>> {
         const response = await this.searchVisibleFundsRaw(requestParameters, initOverrides);

@@ -6,6 +6,6 @@ src/models/NdaoSdkDonationSwap.ts
 src/models/NdaoSdkDonationSwapQuote.ts
 src/models/NdaoSdkFund.ts
 src/models/NdaoSdkOrg.ts
+src/models/NdaoSdkSwapQuote.ts
 src/models/NdaoSdkTransaction.ts
-src/models/SwapQuote.ts
 src/models/index.ts

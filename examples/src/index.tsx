@@ -1,5 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 import { configureChains, createClient, WagmiConfig } from 'wagmi';
 import { mainnet } from 'wagmi/chains';
 import { ConnectKitProvider, getDefaultClient } from 'connectkit';
@@ -9,11 +9,21 @@ import App from './App';
 
 const { chains } = configureChains([mainnet], [publicProvider()]);
 
-const client = createClient(getDefaultClient({ appName: 'Endaoment SDK - Examples', chains }));
+const connectkitClient = getDefaultClient({
+  appName: 'Endaoment SDK - Examples',
+  chains,
+});
+const client = createClient({
+  ...connectkitClient,
 
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+  // Empty storage so that we don't persist any data
+  // Used so that we can run the examples in an iframe
+  storage: { getItem: () => null, setItem: () => null, removeItem: () => null },
+});
+
+const root = createRoot(document.getElementById('root') as HTMLElement);
 root.render(
-  <React.StrictMode>
+  <StrictMode>
     <WagmiConfig client={client}>
       <ConnectKitProvider>
         <ChakraProvider>
@@ -21,5 +31,5 @@ root.render(
         </ChakraProvider>
       </ConnectKitProvider>
     </WagmiConfig>
-  </React.StrictMode>,
+  </StrictMode>
 );

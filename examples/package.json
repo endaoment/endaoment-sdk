@@ -1,14 +1,14 @@
 {
   "name": "endaoment-sdk-examples",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "type": "module",
   "dependencies": {
     "@chakra-ui/icons": "^2.0.17",
     "@chakra-ui/react": "^2.4.9",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@endaoment/sdk": "^0.0.9",
-    "@vitejs/plugin-react": "^3.1.0",
     "connectkit": "^1.1.3",
     "ethers": "^5.7.2",
     "framer-motion": "^8.5.2",
@@ -16,15 +16,12 @@
     "react": "^18.2.0",
     "react-currency-format": "^1.1.0",
     "react-dom": "^18.2.0",
-    "typescript": "^4.9.4",
-    "vite": "^4.1.4",
-    "vite-tsconfig-paths": "^4.0.5",
     "wagmi": "^0.11.5"
   },
   "scripts": {
     "start": "vite",
     "build": "tsc && vite build",
-    "serve": "vite preview"
+    "preview": "vite preview"
   },
   "eslintConfig": {
     "extends": [
@@ -46,6 +43,10 @@
   "devDependencies": {
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
-    "@types/react-currency-format": "^1.0.0"
+    "@types/react-currency-format": "^1.0.0",
+    "@vitejs/plugin-react": "^3.1.0",
+    "typescript": "^4.9.4",
+    "vite": "^4.1.4",
+    "vite-tsconfig-paths": "^4.0.5"
   }
 }

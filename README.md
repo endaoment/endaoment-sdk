@@ -28,10 +28,12 @@
   <br/><br/>
 </div>
 
+This repository contains the SDK for developers to utilize in order to easily assemble blockchain calls to interact with
+the Endaoment ecosystem as well as interface with Endaoment APIs in order to fetch information on entities like Funds
+and Orgs.
 
-This repository contains the SDK for developers to utilize in order to easily assemble blockchain calls to interact with the endaoment ecosystem as well as interface with Endaoment APIs in order to fetch information on Organizations.
-
-This TypeScript/JavaScript client utilizes [Fetch API](https://fetch.spec.whatwg.org/). The module can be used in the following environments:
+This TypeScript/JavaScript client utilizes [Fetch API](https://fetch.spec.whatwg.org/). The module can be used in the
+following environments:
 
 **:earth_americas: Environment**
 
@@ -49,7 +51,8 @@ This TypeScript/JavaScript client utilizes [Fetch API](https://fetch.spec.whatwg
 - CommonJS
 - ES6 module system
 
-It can be used in both TypeScript and JavaScript. In TypeScript, the definition should be automatically resolved via `package.json`. ([Reference](http://www.typescriptlang.org/docs/handbook/typings-for-npm-packages.html))
+It can be used in both TypeScript and JavaScript. In TypeScript, the definition should be automatically resolved via
+`package.json`. ([Reference](http://www.typescriptlang.org/docs/handbook/typings-for-npm-packages.html))
 
 ## Getting started
 
@@ -59,13 +62,15 @@ Navigate to the folder of your consuming project and run the following commands.
 yarn install @endaoment/sdk
 ```
 
-In order to use the functionality available in the library, you must then import `EndaomentSdkApi` from the library and instantiate it.
+In order to use the functionality available in the library, you must then import `EndaomentSdkApi` from the library and
+instantiate it.
 
 ```
 const api = new EndaomentSdkApi()
 ```
 
-Optionally, you can pass a Configuration object when you create the variable in order to add things like middleware or to choose which network to use.
+Optionally, you can pass a Configuration object when you create the variable in order to add things like middleware or
+to choose which network to use.
 
 ```
 const apiConfig = new Configuration({ network: "goerli" })
@@ -80,24 +85,26 @@ api.[functionality to execute]()
 
 ## Examples
 
-### Fetch a list of Orgs (paginated)
+### Get a list of deployed Orgs, with pagination
 
 ```
 api.getDeployedOrgs()
 ```
 
-This call will result in something like:
+Example response:
 
 ```
 [
   {
+    id: "12345678-946e-4f90-ad87-b520d4db179b",
     name: "Sostento Inc",
     ein: "843739888",
     contractAddress: "0x9ee4718e6cae47c9ac0ee1cb459332698c3fd25d",
-    description: "Our mission is to save lives by supporting organizations that serve on the frontline of public health emergencies.",
-    endaomentUrl: "https://app.endaoment.org/orgs/843739888",
+    logoUrl: "https://example.com/the-orgs-logo.jpg",
     nteeCode: "S02",
     nteeDescription: "Management & Technical Assistance",
+    description: "Our mission is to save lives by supporting organizations that serve on the frontline of public health emergencies.",
+    endaomentUrl: "https://app.endaoment.org/orgs/843739888",
   },
   {
     name: "Open Source Election Technology Institute",
@@ -163,7 +170,9 @@ api.getOrgDeployTransaction({
 })
 ```
 
-Executing this will return you the Contract Address you must interact with in the `to` field and the calldata you must provide it in the `data` field. The client's provider is responsible for executing this transaction with the data provided.
+Executing this will return you the Contract Address you must interact with in the `to` field and the calldata you must
+provide it in the `data` field. The client's provider is responsible for executing this transaction with the data
+provided.
 
 This call will result in something like:
 
@@ -194,7 +203,9 @@ api.getDonationSwapTransaction({
 })
 ```
 
-Executing this will return you a full quote to swap any ERC-20 to USDC and donate it to the supplied Org. In order to execute the donation, you must have the client's provider execute a Contract Interaction with the given `to` address and provide it with the `data` field as calldata.
+Executing this will return you a full quote to swap any ERC-20 to USDC and donate it to the supplied Org. In order to
+execute the donation, you must have the client's provider execute a Contract Interaction with the given `to` address and
+provide it with the `data` field as calldata.
 
 This call will result in something like:
 
@@ -225,23 +236,32 @@ or in the case that the EIN is invalid, it will look like:
 
 ### "ReferenceError: fetch is not defined"
 
-This error is due to your environment not having fetch functionality available. It is very important to note that fetch is available in most modern browsers or on Node 18+. In order to use it you will either have to move your project into one of these environments (if its feasible to do so) or install a polyfill for it.
+This error is due to your environment not having fetch functionality available. It is very important to note that fetch
+is available in most modern browsers or on Node 18+. In order to use it you will either have to move your project into
+one of these environments (if its feasible to do so) or install a polyfill for it.
 
 ### "TypeError: Cannot read properties of undefined (reading 'length')"
 
-This is most likely caused by an incorrect configuration object being supplied to the `EndaomentSdkApi` class. Please make sure to instantiate it by providing a `Configuration` class as a parameter, you can import this from the SDK module.
+This is most likely caused by an incorrect configuration object being supplied to the `EndaomentSdkApi` class. Please
+make sure to instantiate it by providing a `Configuration` class as a parameter, you can import this from the SDK
+module.
 
 ### "this.configuration.queryParamsStringify is not a function"
 
-This is most likely caused by an incorrect configuration object being supplied to the `EndaomentSdkApi` class. Please make sure to instantiate it by providing a `Configuration` class as a parameter, you can import this from the SDK module.
+This is most likely caused by an incorrect configuration object being supplied to the `EndaomentSdkApi` class. Please
+make sure to instantiate it by providing a `Configuration` class as a parameter, you can import this from the SDK
+module.
 
 ### "The request failed and the interceptors did not return an alternative response"
 
-While there is many possible causes for this particular problem, it is most likely due to an issue with the connection between the client sending the requests and the Endaoment API. Please check your internet connection to make sure all is well. If that does not resolve the issue, there may be a problem occurring with a hosting provider or the API itself.
+While there is many possible causes for this particular problem, it is most likely due to an issue with the connection
+between the client sending the requests and the Endaoment API. Please check your internet connection to make sure all is
+well. If that does not resolve the issue, there may be a problem occurring with a hosting provider or the API itself.
 
 ## Building
 
-Please take note that most of the content in this library is automatically generated using an OpenAPI generator. In order to update descriptions or add new functionality, please refer back to the SDK module on Endaoment's backend.
+Please take note that most of the content in this library is automatically generated using an OpenAPI generator. In
+order to update descriptions or add new functionality, please refer back to the SDK module on Endaoment's backend.
 
 To build and compile the typescript sources to javascript use:
 

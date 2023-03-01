@@ -27,21 +27,21 @@ const TOKENS = [
     decimals: 18,
     contractAddress: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
   },
-  {
-    symbol: 'WETH',
-    decimals: 18,
-    contractAddress: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
-  },
-  {
-    symbol: 'USDC',
-    decimals: 6,
-    contractAddress: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
-  },
-  {
-    symbol: 'LINK',
-    decimals: 18,
-    contractAddress: '0x514910771AF9Ca656af840dff83E8264EcF986CA',
-  },
+  // {
+  //   symbol: 'WETH',
+  //   decimals: 18,
+  //   contractAddress: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+  // },
+  // {
+  //   symbol: 'USDC',
+  //   decimals: 6,
+  //   contractAddress: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
+  // },
+  // {
+  //   symbol: 'LINK',
+  //   decimals: 18,
+  //   contractAddress: '0x514910771AF9Ca656af840dff83E8264EcF986CA',
+  // },
 ];
 
 function CharitableGiving({ sdk }: { sdk: EndaomentSdkApi }) {
@@ -143,7 +143,7 @@ function CharitableGiving({ sdk }: { sdk: EndaomentSdkApi }) {
             <Text mr="2" display="inline">
               "to": "{`${swapAndDonateTransaction?.to || '0x...'}",`}
             </Text>
-            <Tooltip label="The address of the contract that will perform the swap & donate operation">
+            <Tooltip label="The org's contract address">
               <InfoIcon />
             </Tooltip>{' '}
           </Text>
@@ -151,7 +151,7 @@ function CharitableGiving({ sdk }: { sdk: EndaomentSdkApi }) {
             <Text mr="2" display="inline">
               "data": "{`${swapAndDonateTransaction?.data || '0x...'}",`}
             </Text>
-            <Tooltip label="The calldata required to swap and donate this token to this org's contract">
+            <Tooltip label="The calldata required to swap and donate this token to this org">
               <InfoIcon />
             </Tooltip>{' '}
           </Text>
@@ -159,7 +159,7 @@ function CharitableGiving({ sdk }: { sdk: EndaomentSdkApi }) {
             <Text mr="2" display="inline">
               "value": {`${swapAndDonateTransaction?.value || '0'}`}
             </Text>
-            <Tooltip label="If swapping for ETH/WETH, a value must be sent along">
+            <Tooltip label="If swapping ETH/WETH, a ETH value must be sent along. If using ERC20 tokens, this should be 0">
               <InfoIcon />
             </Tooltip>{' '}
           </Text>

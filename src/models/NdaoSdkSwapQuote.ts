@@ -16,33 +16,33 @@ import { exists, mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface SwapQuote
+ * @interface NdaoSdkSwapQuote
  */
-export interface SwapQuote {
+export interface NdaoSdkSwapQuote {
     /**
      * The price impact this swap will produce
      * @type {number}
-     * @memberof SwapQuote
+     * @memberof NdaoSdkSwapQuote
      */
     priceImpact: number;
     /**
      * The expected output for this swap
      * @type {string}
-     * @memberof SwapQuote
+     * @memberof NdaoSdkSwapQuote
      */
     expectedUsdc: string;
     /**
      * The minimum value this swap will output
      * @type {string}
-     * @memberof SwapQuote
+     * @memberof NdaoSdkSwapQuote
      */
     minimumTolerableUsdc: string;
 }
 
 /**
- * Check if a given object implements the SwapQuote interface.
+ * Check if a given object implements the NdaoSdkSwapQuote interface.
  */
-export function instanceOfSwapQuote(value: object): boolean {
+export function instanceOfNdaoSdkSwapQuote(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "priceImpact" in value;
     isInstance = isInstance && "expectedUsdc" in value;
@@ -51,11 +51,11 @@ export function instanceOfSwapQuote(value: object): boolean {
     return isInstance;
 }
 
-export function SwapQuoteFromJSON(json: any): SwapQuote {
-    return SwapQuoteFromJSONTyped(json, false);
+export function NdaoSdkSwapQuoteFromJSON(json: any): NdaoSdkSwapQuote {
+    return NdaoSdkSwapQuoteFromJSONTyped(json, false);
 }
 
-export function SwapQuoteFromJSONTyped(json: any, ignoreDiscriminator: boolean): SwapQuote {
+export function NdaoSdkSwapQuoteFromJSONTyped(json: any, ignoreDiscriminator: boolean): NdaoSdkSwapQuote {
     if ((json === undefined) || (json === null)) {
         return json;
     }
@@ -67,7 +67,7 @@ export function SwapQuoteFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     };
 }
 
-export function SwapQuoteToJSON(value?: SwapQuote | null): any {
+export function NdaoSdkSwapQuoteToJSON(value?: NdaoSdkSwapQuote | null): any {
     if (value === undefined) {
         return undefined;
     }

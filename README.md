@@ -85,7 +85,7 @@ api.[functionality to execute]()
 
 ## Examples
 
-### Get a list of deployed Orgs (paginated)
+### Get a list of deployed Orgs, with pagination
 
 ```ts
 api.getDeployedOrgs()
@@ -161,7 +161,7 @@ api.getOrgDeployTransaction({
 ```
 
 Executing this will return you the Contract Address you must interact with in the `to` field and the calldata you must
-provide in the `data` field. The client's provider is responsible for executing this transaction with the data
+provide it in the `data` field. The client's provider is responsible for executing this transaction with the data
 provided.
 
 This call will result in something like:
@@ -193,7 +193,7 @@ api.getDonationSwapTransaction({
 })
 ```
 
-Executing this will return you a full quote to swap ETH or any ERC-20 to USDC and donate it to the supplied Org. In order to
+Executing this will return you a full quote to swap any ERC-20 to USDC and donate it to the supplied Org. In order to
 execute the donation, you must have the client's provider execute a Contract Interaction with the given `to` address and
 provide it with the `data` field as calldata.
 

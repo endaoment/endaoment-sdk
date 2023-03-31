@@ -31,7 +31,7 @@ import NumberFormatter from 'react-currency-format';
 import { parseUnits } from 'ethers/lib/utils.js';
 import { BigNumber } from 'ethers';
 
-// Forked mainnet and goerli addresses
+// mainnet addresses
 const TOKENS = [
   {
     symbol: 'ETH',
@@ -105,7 +105,12 @@ function CharitableGiving({ sdk }: { sdk: EndaomentSdkApi }) {
 
   const handleTokenChange = (v: any) => {
     setSwapAndDonateTransaction(undefined);
-    setSelectedToken(TOKENS.find((t) => t.contractAddress === v.target.value)!);
+    const newSelectedToken = TOKENS.find((t) => t.contractAddress === v.target.value);
+
+    if (!newSelectedToken) return;
+
+    setSelectedToken(newSelectedToken);
+    setAmountInParsed(parseUnits(amountIn || '0', newSelectedToken.decimals));
   };
 
   const handleAmountInChange = (v: string) => {

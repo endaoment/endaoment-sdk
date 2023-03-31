@@ -61,9 +61,12 @@ function CharitableGiving({ sdk }: { sdk: EndaomentSdkApi }) {
   const [ein, setEin] = useState('844661797');
   const [selectedToken, setSelectedToken] = useState(TOKENS[0]);
   const [amountIn, setAmountIn] = useState('1');
-  const [amountInParsed, setAmountInParsed] = useState(parseUnits(amountIn || '0', selectedToken.decimals));
+  const [amountInParsed, setAmountInParsed] = useState(
+    parseUnits(amountIn || '0', selectedToken.decimals)
+  );
   const [loading, setLoading] = useState(false);
-  const [swapAndDonateTransaction, setSwapAndDonateTransaction] = useState<NdaoSdkDonationSwap>();
+  const [swapAndDonateTransaction, setSwapAndDonateTransaction] =
+    useState<NdaoSdkDonationSwap>();
 
   // Send swap and donate transaction
   const { config: config1 } = usePrepareSendTransaction({
@@ -101,13 +104,19 @@ function CharitableGiving({ sdk }: { sdk: EndaomentSdkApi }) {
   });
   const { write: erc20Approve } = useContractWrite(config2);
 
-  const requiresAllowance = entityAllowance && entityAllowance.lt(amountInParsed);
-
-  console.log(amountIn, amountInParsed, entityAllowance, requiresAllowance);
+  const requiresAllowance =
+    entityAllowance && entityAllowance.lt(amountInParsed);
 
   const handleTokenChange = (v: any) => {
     setSwapAndDonateTransaction(undefined);
-    setSelectedToken(TOKENS.find((t) => t.contractAddress === v.target.value)!);
+    const newSelectedToken = TOKENS.find(
+      (t) => t.contractAddress === v.target.value
+    );
+
+    if (!newSelectedToken) return;
+
+    setSelectedToken(newSelectedToken);
+    setAmountInParsed(parseUnits(amountIn || '0', newSelectedToken.decimals));
   };
 
   const handleAmountInChange = (v: string) => {
@@ -150,8 +159,7 @@ function CharitableGiving({ sdk }: { sdk: EndaomentSdkApi }) {
               onChange={(v) => setEin(v)}
               value={ein}
               onKeyDown={(e) => e.key === 'Enter' && handleGetTransactionData()}
-              w="100%"
-            >
+              w="100%">
               <NumberInputField placeholder="EIN" />
             </NumberInput>
           </InputGroup>
@@ -161,16 +169,22 @@ function CharitableGiving({ sdk }: { sdk: EndaomentSdkApi }) {
               flex="3"
               onChange={handleAmountInChange}
               value={amountIn}
-              onKeyDown={(e) => e.key === 'Enter' && handleGetTransactionData()}
-            >
+              onKeyDown={(e) =>
+                e.key === 'Enter' && handleGetTransactionData()
+              }>
               <NumberInputField
                 placeholder={`Amount in ${selectedToken.symbol} (${selectedToken.decimals} decimals)`}
               />
             </NumberInput>
 
-            <Select value={selectedToken.contractAddress} onChange={handleTokenChange} flex="1">
+            <Select
+              value={selectedToken.contractAddress}
+              onChange={handleTokenChange}
+              flex="1">
               {TOKENS.map((token) => (
-                <option key={token.contractAddress} value={token.contractAddress}>
+                <option
+                  key={token.contractAddress}
+                  value={token.contractAddress}>
                   {token.symbol}
                 </option>
               ))}
@@ -230,7 +244,9 @@ function CharitableGiving({ sdk }: { sdk: EndaomentSdkApi }) {
               <ListItem>
                 Minimum USDC Output:{' '}
                 <NumberFormatter
-                  value={+swapAndDonateTransaction.quote.minimumTolerableUsdc / 1e6}
+                  value={
+                    +swapAndDonateTransaction.quote.minimumTolerableUsdc / 1e6
+                  }
                   displayType="text"
                   thousandSeparator
                   prefix="$"
@@ -253,8 +269,7 @@ function CharitableGiving({ sdk }: { sdk: EndaomentSdkApi }) {
                 onClick={handleApproveAllowance}
                 rightIcon={<ChevronRightIcon />}
                 aria-label="Approve Allowance"
-                colorScheme="blue"
-              >
+                colorScheme="blue">
                 Approve Allowance
               </Button>
             )}
@@ -263,8 +278,7 @@ function CharitableGiving({ sdk }: { sdk: EndaomentSdkApi }) {
                 onClick={handleSwapAndDonate}
                 rightIcon={<ChevronRightIcon />}
                 aria-label="Swap and Donate"
-                colorScheme="green"
-              >
+                colorScheme="green">
                 Swap & Donate
               </Button>
             )}

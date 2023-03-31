@@ -66,7 +66,7 @@ function CharitableGiving({ sdk }: { sdk: EndaomentSdkApi }) {
   const [swapAndDonateTransaction, setSwapAndDonateTransaction] = useState<NdaoSdkDonationSwap>();
 
   // Send swap and donate transaction
-  const { config: config1 } = usePrepareSendTransaction({
+  const { config: configPrepareTxSwapAndDonate } = usePrepareSendTransaction({
     request: {
       to: swapAndDonateTransaction?.to as string,
       data: swapAndDonateTransaction?.data as string,
@@ -76,7 +76,7 @@ function CharitableGiving({ sdk }: { sdk: EndaomentSdkApi }) {
     enabled: !!swapAndDonateTransaction,
     onError: (error) => console.error(error),
   });
-  const { sendTransaction } = useSendTransaction(config1);
+  const { sendTransaction } = useSendTransaction(configPrepareTxSwapAndDonate);
 
   const isETH = selectedToken.symbol === 'ETH';
 
@@ -89,7 +89,7 @@ function CharitableGiving({ sdk }: { sdk: EndaomentSdkApi }) {
     watch: true,
   });
 
-  const { config: config2 } = usePrepareContractWrite({
+  const { config: configPrepareWriteApproveAllowance } = usePrepareContractWrite({
     address: selectedToken.contractAddress as Address,
     abi: erc20ABI,
     functionName: 'approve',
@@ -99,11 +99,9 @@ function CharitableGiving({ sdk }: { sdk: EndaomentSdkApi }) {
       gasLimit: BigNumber.from(100_000),
     },
   });
-  const { write: erc20Approve } = useContractWrite(config2);
+  const { write: erc20Approve } = useContractWrite(configPrepareWriteApproveAllowance);
 
   const requiresAllowance = entityAllowance && entityAllowance.lt(amountInParsed);
-
-  console.log(amountIn, amountInParsed, entityAllowance, requiresAllowance);
 
   const handleTokenChange = (v: any) => {
     setSwapAndDonateTransaction(undefined);

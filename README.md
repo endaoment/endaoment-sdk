@@ -58,21 +58,21 @@ It can be used in both TypeScript and JavaScript. In TypeScript, the definition 
 
 Navigate to the folder of your consuming project and run the following commands.
 
-```
+```bash
 yarn install @endaoment/sdk
 ```
 
 In order to use the functionality available in the library, you must then import `EndaomentSdkApi` from the library and
 instantiate it.
 
-```
+```ts
 const api = new EndaomentSdkApi()
 ```
 
 Optionally, you can pass a Configuration object when you create the variable in order to add things like middleware or
 to choose which network to use.
 
-```
+```ts
 const apiConfig = new Configuration({ network: "goerli" })
 const api = new EndaomentSdkApi(apiConfig)
 ```
@@ -87,13 +87,13 @@ api.[functionality to execute]()
 
 ### Get a list of deployed Orgs, with pagination
 
-```
+```ts
 api.getDeployedOrgs()
 ```
 
 Example response:
 
-```
+```json
 [
   {
     id: "12345678-946e-4f90-ad87-b520d4db179b",
@@ -124,16 +124,16 @@ Since this functionality is paginated, it accepts the arguments of `count` and `
 
 ### Search for an Org (paginated)
 
-```
-api.searchDeployedOrgs({
-  name: 'sostento',
-  nteeMajorCodes: undefined // Optional, go from A to Z single letter only
+```ts
+api.searchOrgs({
+  searchTerm: 'health',
+  nteeMajorCodes: 'S'
 })
 ```
 
 This call will result in something like:
 
-```
+```json
 [
   {
     name: "Sostento Inc",
@@ -143,16 +143,6 @@ This call will result in something like:
     endaomentUrl: "https://app.endaoment.org/orgs/843739888",
     nteeCode: "S02",
     nteeDescription: "Management & Technical Assistance",
-  },
-  {
-    name: "Open Source Election Technology Institute",
-    ein: "208743186",
-    ...
-  },
-  {
-    name: "Rock the Vote",
-    ein: "020767157",
-    ...
   },
   ...
 ]
@@ -164,7 +154,7 @@ Since this functionality is paginated, it accepts the arguments of `count` and `
 
 ### Assemble transaction data to Deploy an Org Contract
 
-```
+```ts
 api.getOrgDeployTransaction({
   ein: '020767157' // Deploying Org with this EIN
 })
@@ -176,7 +166,7 @@ provided.
 
 This call will result in something like:
 
-```
+```json
 {
   data: "0xa60fe71d3635313031313939390000000000000000000000000000000000000000000000",
   to: "0x10fd9348136dcea154f752fe0b6db45fc298a589",
@@ -186,7 +176,7 @@ This call will result in something like:
 
 or in the case that the EIN is invalid, it will look like:
 
-```
+```json
 {
   error: "Not Found",
   message: "Could not find org with EIN 123456789",
@@ -196,10 +186,10 @@ or in the case that the EIN is invalid, it will look like:
 
 ### Assemble transaction data to Donate to an Org Contract
 
-```
+```ts
 api.getDonationSwapTransaction({
     ein: '020767157', // Donating to Org with this EIN
-    amountIn: '100000000', // Donating 100 USDC
+    amountIn: '1000000000000000000', // Donating 1 ETH
 })
 ```
 
@@ -209,28 +199,61 @@ provide it with the `data` field as calldata.
 
 This call will result in something like:
 
-```
+```json
 {
-  to: "0xc8457e21c1beafe5473fc9a318bfc7fe95db1f62",
-  data: "0x5ae401dc0000000000000000000000000000000000000000000000000000000063cec05d00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000e404e45aaf000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb480000000000000000000000000000000000000000000000000000000000000bb80000000000000000000000003d527234b1db6d66e48e403a9dd98def00de98cf0000000000000000000000000000000000000000000000000000000005f5e1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-  value: "100000000",
-  quote: {
-    priceImpact: 100,
-    expectedUsdc: "0",
-    minimumTolerableUsdc: "0"
-  }
+  "data": "0xa2f48b9f000000000000000000000000df01af7e93453c081408921742043df8c8f8c039000000000000000000000000eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee0000000000000000000000000000000000000000000000000de0b6b3a7640000000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000001a45ae401dc000000000000000000000000000000000000000000000000000000006424571f00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000e404e45aaf000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb4800000000000000000000000000000000000000000000000000000000000001f40000000000000000000000007ecc1d4936a973ec3b153c0c713e0f71c59abf530000000000000000000000000000000000000000000000000de0b6b3a7640000000000000000000000000000000000000000000000000000000000004b2d360700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+  "quote": {
+    "expectedUsdc": "1273866693",
+    "minimumTolerableUsdc": "1261254151",
+    "priceImpact": 0.286908
+  },
+  "to": "0x7ecc1d4936a973ec3b153c0c713e0f71c59abf53",
+  "value": "1000000000000000000"
 }
 ```
 
 or in the case that the EIN is invalid, it will look like:
 
-```
+```json
 {
   error: "Not Found",
   message: "Could not find org with EIN 123456789",
   statusCode: 404
 }
 ```
+
+> Note that USDC donations do not require a swap and will return a direct `donate` contract call, like the below example
+
+```json
+{
+  "data": "0xf14faf6f00000000000000000000000000000000000000000000000000000000000f4240",
+  "quote": {
+    "expectedUsdc": "2500000000",
+    "minimumTolerableUsdc": "2500000000",
+    "priceImpact": 0
+  },
+  "to": "0x7ecc1d4936a973ec3b153c0c713e0f71c59abf53",
+  "value": "0"
+}
+
+```
+
+### Get a list of visible Endaoment Funds (paginated)
+  
+```ts
+api.getVisibleFunds()
+```
+
+> Due to visibility settings, this query will only return `transparent` and `community` funds. No `private` funds will be returned.
+
+### Search through visible Endaoment Funds (paginated)
+
+```ts
+sdk.searchVisibleFunds({ name: 'Fund Name' })
+```
+
+> Due to visibility settings, this query will only return `transparent` and `community` funds. No `private` funds will be returned.
+
 
 ## Potential Errors
 
@@ -257,6 +280,8 @@ module.
 While there is many possible causes for this particular problem, it is most likely due to an issue with the connection
 between the client sending the requests and the Endaoment API. Please check your internet connection to make sure all is
 well. If that does not resolve the issue, there may be a problem occurring with a hosting provider or the API itself.
+
+> In case you find an issue that is not listed here, please open an issue on the Github repo.
 
 ## Building
 

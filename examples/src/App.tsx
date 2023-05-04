@@ -10,14 +10,16 @@ import {
   Divider,
   Flex,
   VStack,
+  Select,
 } from '@chakra-ui/react';
 import { Configuration, EndaomentSdkApi } from '@endaoment/sdk';
 import { ConnectKitButton } from 'connectkit';
-import { useNetwork } from 'wagmi';
+import { useNetwork, useSwitchNetwork } from 'wagmi';
 import CharitableGiving from './sections/CharitableGiving';
 
 import Discoverability from './sections/Discoverability';
 import EntityDeploy from './sections/EntityDeploy';
+import { useState } from 'react';
 
 // const config = new Configuration({ network: 'local' });
 const config = new Configuration({ network: 'mainnet' });
@@ -46,6 +48,16 @@ const CustomTabPanel = ({
 
 function App() {
   const { chain } = useNetwork();
+  const { chains, switchNetwork } = useSwitchNetwork();
+
+  const [sdk, setSdk] = useState(new EndaomentSdkApi(new Configuration({ network: 'goerli' })));
+
+  const handleChainChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const chainId = +e.target.value;
+    switchNetwork?.(chainId);
+
+    setSdk(new EndaomentSdkApi(new Configuration({ network: chainId === 1 ? 'mainnet' : 'goerli' })));
+  };
 
   return (
     <Container maxW="4xl" p="4" mt="16">
@@ -53,11 +65,19 @@ function App() {
         <Heading size="md">Endaoment SDK - Examples</Heading>
         <VStack spacing="1">
           <ConnectKitButton theme="soft" />
-          {chain && (
-            <Text fontSize="xs">
-              Chain: {chain.name} ({chain.id})
-            </Text>
-          )}
+
+          <Select
+            variant="flushed"
+            value={chain?.id}
+            onChange={handleChainChange}
+            placeholder={chain?.id ? 'Select Network' : '👆 Waiting for Connect'}
+          >
+            {chains.map((c) => (
+              <option key={c.id} value={c.id}>
+                {c.name} ({c.id})
+              </option>
+            ))}
+          </Select>
         </VStack>
       </Flex>
 

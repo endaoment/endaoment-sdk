@@ -30,36 +30,13 @@ import {
 import NumberFormatter from 'react-currency-format';
 import { parseUnits } from 'ethers/lib/utils.js';
 import { BigNumber } from 'ethers';
+import { Token } from '../constants';
 
-// mainnet addresses
-const TOKENS = [
-  {
-    symbol: 'ETH',
-    decimals: 18,
-    contractAddress: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
-  },
-  {
-    symbol: 'WETH',
-    decimals: 18,
-    contractAddress: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
-  },
-  {
-    symbol: 'USDC',
-    decimals: 6,
-    contractAddress: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
-  },
-  {
-    symbol: 'DAI',
-    decimals: 18,
-    contractAddress: '0x6b175474e89094c44da98b954eedeac495271d0f',
-  },
-];
-
-function CharitableGiving({ sdk }: { sdk: EndaomentSdkApi }) {
+function CharitableGiving({ sdk, tokens }: { sdk: EndaomentSdkApi; tokens: Token[] }) {
   const { address } = useAccount();
 
   const [ein, setEin] = useState('844661797');
-  const [selectedToken, setSelectedToken] = useState(TOKENS[0]);
+  const [selectedToken, setSelectedToken] = useState(tokens[0]);
   const [amountIn, setAmountIn] = useState('1');
   const [amountInParsed, setAmountInParsed] = useState(parseUnits(amountIn || '0', selectedToken.decimals));
   const [loading, setLoading] = useState(false);
@@ -105,7 +82,7 @@ function CharitableGiving({ sdk }: { sdk: EndaomentSdkApi }) {
 
   const handleTokenChange = (v: any) => {
     setSwapAndDonateTransaction(undefined);
-    const newSelectedToken = TOKENS.find((t) => t.contractAddress === v.target.value);
+    const newSelectedToken = tokens.find((t) => t.contractAddress === v.target.value);
 
     if (!newSelectedToken) return;
 
@@ -172,7 +149,7 @@ function CharitableGiving({ sdk }: { sdk: EndaomentSdkApi }) {
             </NumberInput>
 
             <Select value={selectedToken.contractAddress} onChange={handleTokenChange} flex="1">
-              {TOKENS.map((token) => (
+              {tokens.map((token) => (
                 <option key={token.contractAddress} value={token.contractAddress}>
                   {token.symbol}
                 </option>

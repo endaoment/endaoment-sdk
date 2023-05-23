@@ -12,6 +12,7 @@ const { chains } = configureChains([goerli, mainnet], [publicProvider()]);
 const connectkitClient = getDefaultClient({
   appName: 'Endaoment SDK - Examples',
   chains,
+  infuraId: '3645d258bf3848ebaf1ca4c5edf08e65',
 });
 const client = createClient({
   ...connectkitClient,

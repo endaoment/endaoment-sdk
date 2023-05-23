@@ -113,7 +113,13 @@ function Discoverability({ sdk }: { sdk: EndaomentSdkApi }) {
               <AccordionPanel>
                 <Flex alignItems="center" gap="8" p="4">
                   {entity.logoUrl && <Avatar src={entity.logoUrl} name={entity.name} size="2xl" />}
-                  <p>{parse(entity.description || '')}</p>
+                  {entity.description && (
+                    <p>
+                      {parse(
+                        `${entity.description.slice(0, 256)}${entity.description.length >= 256 ? '...' : ''}` || '',
+                      )}
+                    </p>
+                  )}
                 </Flex>
 
                 <Flex mt="2" justifyContent="space-between">

@@ -19,11 +19,7 @@ import CharitableGiving from './sections/CharitableGiving';
 
 import Discoverability from './sections/Discoverability';
 import EntityDeploy from './sections/EntityDeploy';
-import { useState } from 'react';
-
-// const config = new Configuration({ network: 'local' });
-const config = new Configuration({ network: 'mainnet' });
-const sdk = new EndaomentSdkApi(config);
+import { useMemo } from 'react';
 
 const CustomTabPanel = ({
   title,
@@ -50,13 +46,19 @@ function App() {
   const { chain } = useNetwork();
   const { chains, switchNetwork } = useSwitchNetwork();
 
-  const [sdk, setSdk] = useState(new EndaomentSdkApi(new Configuration({ network: 'goerli' })));
+  /**
+   * SDK updates config based on chainId
+   * mainnet - Prod API
+   * goerli - Staging API
+   */
+  const sdk = useMemo(
+    () => new EndaomentSdkApi(new Configuration({ network: chain?.id === 1 ? 'mainnet' : 'goerli' })),
+    [chain?.id],
+  );
 
   const handleChainChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const chainId = +e.target.value;
     switchNetwork?.(chainId);
-
-    setSdk(new EndaomentSdkApi(new Configuration({ network: chainId === 1 ? 'mainnet' : 'goerli' })));
   };
 
   return (
@@ -66,18 +68,15 @@ function App() {
         <VStack spacing="1">
           <ConnectKitButton theme="soft" />
 
-          <Select
-            variant="flushed"
-            value={chain?.id}
-            onChange={handleChainChange}
-            placeholder={chain?.id ? 'Select Network' : '👆 Waiting for Connect'}
-          >
-            {chains.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.name} ({c.id})
-              </option>
-            ))}
-          </Select>
+          {chain?.id && chains.length > 1 && (
+            <Select variant="flushed" value={chain.id} onChange={handleChainChange} placeholder="Select Network">
+              {chains.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.name} ({c.id})
+                </option>
+              ))}
+            </Select>
+          )}
         </VStack>
       </Flex>
 

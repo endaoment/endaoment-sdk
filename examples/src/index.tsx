@@ -1,13 +1,13 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { configureChains, createClient, WagmiConfig } from 'wagmi';
-import { mainnet } from 'wagmi/chains';
+import { mainnet, goerli } from 'wagmi/chains';
 import { ConnectKitProvider, getDefaultClient } from 'connectkit';
 import { publicProvider } from 'wagmi/providers/public';
 import { ChakraProvider } from '@chakra-ui/react';
 import App from './App';
 
-const { chains } = configureChains([mainnet], [publicProvider()]);
+const { chains } = configureChains([goerli, mainnet], [publicProvider()]);
 
 const connectkitClient = getDefaultClient({
   appName: 'Endaoment SDK - Examples',
@@ -31,5 +31,5 @@ root.render(
         </ChakraProvider>
       </ConnectKitProvider>
     </WagmiConfig>
-  </StrictMode>
+  </StrictMode>,
 );

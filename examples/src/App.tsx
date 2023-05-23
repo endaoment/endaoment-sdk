@@ -10,18 +10,16 @@ import {
   Divider,
   Flex,
   VStack,
+  Select,
 } from '@chakra-ui/react';
 import { Configuration, EndaomentSdkApi } from '@endaoment/sdk';
 import { ConnectKitButton } from 'connectkit';
-import { useNetwork } from 'wagmi';
+import { useNetwork, useSwitchNetwork } from 'wagmi';
 import CharitableGiving from './sections/CharitableGiving';
 
 import Discoverability from './sections/Discoverability';
 import EntityDeploy from './sections/EntityDeploy';
-
-// const config = new Configuration({ network: 'local' });
-const config = new Configuration({ network: 'mainnet' });
-const sdk = new EndaomentSdkApi(config);
+import { useMemo } from 'react';
 
 const CustomTabPanel = ({
   title,
@@ -46,6 +44,22 @@ const CustomTabPanel = ({
 
 function App() {
   const { chain } = useNetwork();
+  const { chains, switchNetwork } = useSwitchNetwork();
+
+  /**
+   * SDK updates config based on chainId
+   * mainnet - Prod API
+   * goerli - Staging API
+   */
+  const sdk = useMemo(
+    () => new EndaomentSdkApi(new Configuration({ network: chain?.id === 1 ? 'mainnet' : 'goerli' })),
+    [chain?.id],
+  );
+
+  const handleChainChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const chainId = +e.target.value;
+    switchNetwork?.(chainId);
+  };
 
   return (
     <Container maxW="4xl" p="4" mt="16">
@@ -53,10 +67,15 @@ function App() {
         <Heading size="md">Endaoment SDK - Examples</Heading>
         <VStack spacing="1">
           <ConnectKitButton theme="soft" />
-          {chain && (
-            <Text fontSize="xs">
-              Chain: {chain.name} ({chain.id})
-            </Text>
+
+          {chain?.id && chains.length > 1 && (
+            <Select variant="flushed" value={chain.id} onChange={handleChainChange} placeholder="Select Network">
+              {chains.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.name} ({c.id})
+                </option>
+              ))}
+            </Select>
           )}
         </VStack>
       </Flex>

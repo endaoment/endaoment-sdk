@@ -14,12 +14,14 @@ import {
 } from '@chakra-ui/react';
 import { Configuration, EndaomentSdkApi } from '@endaoment/sdk';
 import { ConnectKitButton } from 'connectkit';
-import { useNetwork, useSwitchNetwork } from 'wagmi';
+import { useAccount, useConnect, useNetwork, useSwitchNetwork } from 'wagmi';
 import CharitableGiving from './sections/CharitableGiving';
 
 import Discoverability from './sections/Discoverability';
 import EntityDeploy from './sections/EntityDeploy';
 import { useMemo } from 'react';
+import { TOKENS_GOERLI, TOKENS_MAINNET } from './constants';
+import ConnectFirst from './components/ConnectFirst';
 
 const CustomTabPanel = ({
   title,
@@ -29,22 +31,28 @@ const CustomTabPanel = ({
   title: string;
   description: string;
   children: JSX.Element;
-}) => (
-  <TabPanel>
-    <Heading my={4} size="md">
-      {title}
-    </Heading>
-    <Text mb={4}>{description}</Text>
+}) => {
+  const { isConnected } = useAccount();
 
-    <Divider my="4" />
+  return (
+    <TabPanel>
+      <Heading my={4} size="md">
+        {title}
+      </Heading>
+      <Text mb={4}>{description}</Text>
 
-    {children}
-  </TabPanel>
-);
+      <Divider my="4" />
+
+      {isConnected ? children : <ConnectFirst />}
+    </TabPanel>
+  );
+};
 
 function App() {
   const { chain } = useNetwork();
   const { chains, switchNetwork } = useSwitchNetwork();
+
+  const isMainnet = chain?.id === 1;
 
   /**
    * SDK updates config based on chainId
@@ -52,7 +60,7 @@ function App() {
    * goerli - Staging API
    */
   const sdk = useMemo(
-    () => new EndaomentSdkApi(new Configuration({ network: chain?.id === 1 ? 'mainnet' : 'goerli' })),
+    () => new EndaomentSdkApi(new Configuration({ network: isMainnet ? 'mainnet' : 'goerli' })),
     [chain?.id],
   );
 
@@ -106,7 +114,7 @@ function App() {
             title="Donating to Endaoment Entities"
             description="Easily get token quotes and donate to your favorite org or fund"
           >
-            <CharitableGiving sdk={sdk} />
+            <CharitableGiving sdk={sdk} tokens={isMainnet ? TOKENS_MAINNET : TOKENS_GOERLI} />
           </CustomTabPanel>
         </TabPanels>
       </Tabs>

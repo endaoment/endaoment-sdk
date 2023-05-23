@@ -85,7 +85,7 @@ api.[functionality to execute]()
 
 ### Networks
 
-The three currently supported networks are `mainnet`, `goerli`, and `local`. `mainnet` is the live and fully operational network where actual transactions and operations take place. `goerli` is a testnet used for testing and experimentation, allowing developers and users to try out new features and functionalities without using real money. A `local` node refers to an individual user's computer or device that participates in the cryptocurrency network, storing a copy of the blockchain and helping to validate transactions within that network.
+The three currently supported networks are `Mainnet`, `Goerli`, and `Local`. `Mainnet` is the live and fully operational network where actual transactions and operations take place. `Goerli` is a testnet used for testing and experimentation, allowing developers and users to try out new features and functionalities without using real money. A `Local` node refers to an individual user's computer or device that participates in the cryptocurrency network, storing a copy of the blockchain and helping to validate transactions within that network.
 
 The production Endaoment application, `app.endaoment.org` is on the mainnet. The staging and testing sites such as `app.staging.endaoment.org` are on the Goerli test network. To pull data from a specific site, you may have to change the network.
 

@@ -10,18 +10,18 @@ import {
   Divider,
   Flex,
   VStack,
+  Select,
 } from '@chakra-ui/react';
 import { Configuration, EndaomentSdkApi } from '@endaoment/sdk';
 import { ConnectKitButton } from 'connectkit';
-import { useNetwork } from 'wagmi';
+import { useAccount, useConnect, useNetwork, useSwitchNetwork } from 'wagmi';
 import CharitableGiving from './sections/CharitableGiving';
 
 import Discoverability from './sections/Discoverability';
 import EntityDeploy from './sections/EntityDeploy';
-
-// const config = new Configuration({ network: 'local' });
-const config = new Configuration({ network: 'mainnet' });
-const sdk = new EndaomentSdkApi(config);
+import { useMemo } from 'react';
+import { TOKENS_GOERLI, TOKENS_MAINNET } from './constants';
+import ConnectFirst from './components/ConnectFirst';
 
 const CustomTabPanel = ({
   title,
@@ -31,21 +31,43 @@ const CustomTabPanel = ({
   title: string;
   description: string;
   children: JSX.Element;
-}) => (
-  <TabPanel>
-    <Heading my={4} size="md">
-      {title}
-    </Heading>
-    <Text mb={4}>{description}</Text>
+}) => {
+  const { isConnected } = useAccount();
 
-    <Divider my="4" />
+  return (
+    <TabPanel>
+      <Heading my={4} size="md">
+        {title}
+      </Heading>
+      <Text mb={4}>{description}</Text>
 
-    {children}
-  </TabPanel>
-);
+      <Divider my="4" />
+
+      {isConnected ? children : <ConnectFirst />}
+    </TabPanel>
+  );
+};
 
 function App() {
   const { chain } = useNetwork();
+  const { chains, switchNetwork } = useSwitchNetwork();
+
+  const isMainnet = chain?.id === 1;
+
+  /**
+   * SDK updates config based on chainId
+   * mainnet - Prod API
+   * goerli - Staging API
+   */
+  const sdk = useMemo(
+    () => new EndaomentSdkApi(new Configuration({ network: isMainnet ? 'mainnet' : 'goerli' })),
+    [chain?.id],
+  );
+
+  const handleChainChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const chainId = +e.target.value;
+    switchNetwork?.(chainId);
+  };
 
   return (
     <Container maxW="4xl" p="4" mt="16">
@@ -53,10 +75,15 @@ function App() {
         <Heading size="md">Endaoment SDK - Examples</Heading>
         <VStack spacing="1">
           <ConnectKitButton theme="soft" />
-          {chain && (
-            <Text fontSize="xs">
-              Chain: {chain.name} ({chain.id})
-            </Text>
+
+          {chain?.id && chains.length > 1 && (
+            <Select variant="flushed" value={chain.id} onChange={handleChainChange} placeholder="Select Network">
+              {chains.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.name} ({c.id})
+                </option>
+              ))}
+            </Select>
           )}
         </VStack>
       </Flex>
@@ -87,7 +114,7 @@ function App() {
             title="Donating to Endaoment Entities"
             description="Easily get token quotes and donate to your favorite org or fund"
           >
-            <CharitableGiving sdk={sdk} />
+            <CharitableGiving sdk={sdk} tokens={isMainnet ? TOKENS_MAINNET : TOKENS_GOERLI} />
           </CustomTabPanel>
         </TabPanels>
       </Tabs>

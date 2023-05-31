@@ -29,8 +29,11 @@ import {
   Badge,
 } from '@chakra-ui/react';
 import { CopyIcon, ExternalLinkIcon } from '@chakra-ui/icons';
+import { useNetwork } from 'wagmi';
 
 function Discoverability({ sdk }: { sdk: EndaomentSdkApi }) {
+  const { chain } = useNetwork();
+
   const [searchTerm, setSearchTerm] = useState('');
   const [searchingForOrgs, setSearchingForOrgs] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -52,6 +55,8 @@ function Discoverability({ sdk }: { sdk: EndaomentSdkApi }) {
     setLoading(false);
     setSearchTerm('');
   };
+
+  const isTestnet = chain?.id !== 1;
 
   return (
     <>
@@ -108,7 +113,13 @@ function Discoverability({ sdk }: { sdk: EndaomentSdkApi }) {
               <AccordionPanel>
                 <Flex alignItems="center" gap="8" p="4">
                   {entity.logoUrl && <Avatar src={entity.logoUrl} name={entity.name} size="2xl" />}
-                  <p>{parse(entity.description || '')}</p>
+                  {entity.description && (
+                    <p>
+                      {parse(
+                        `${entity.description.slice(0, 256)}${entity.description.length >= 256 ? '...' : ''}` || '',
+                      )}
+                    </p>
+                  )}
                 </Flex>
 
                 <Flex mt="2" justifyContent="space-between">
@@ -134,11 +145,20 @@ function Discoverability({ sdk }: { sdk: EndaomentSdkApi }) {
                   </HStack>
 
                   <VStack>
-                    <Link href={entity.endaomentUrl} target="_blank">
+                    <Link
+                      href={`https://app${isTestnet ? '.staging' : ''}.endaoment.org/${
+                        searchingForOrgs ? 'orgs' : 'funds'
+                      }/${entity.id}`}
+                      target="_blank"
+                    >
                       Endaoment <ExternalLinkIcon />
                     </Link>
                     {entity.contractAddress && (
-                      <Link href={`https://etherscan.io/address/${entity.contractAddress}`} target="_blank" ml="1">
+                      <Link
+                        href={`https://${isTestnet ? 'goerli.' : ''}etherscan.io/address/${entity.contractAddress}`}
+                        target="_blank"
+                        ml="1"
+                      >
                         Etherscan <ExternalLinkIcon />
                       </Link>
                     )}

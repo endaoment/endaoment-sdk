@@ -71,7 +71,7 @@ function EntityDeploy({ sdk }: { sdk: EndaomentSdkApi }) {
       <VStack my="4">
         <Code p={4} w="100%">
           {deployTransaction && orgToDeploy && (
-            <Text mb="4">{`// Transaction data to deploy ${orgToDeploy.name} (EIN ${orgToDeploy.ein})`}</Text>
+            <Text mb="4">{`// Transaction data to deploy ${orgToDeploy.name}`}</Text>
           )}
           {'{'}
           <br />

@@ -4,6 +4,10 @@ export type Token = {
   contractAddress: string;
 };
 
+export const KNOWN_ADDRESSES = {
+  OrgFundFactory: '0x10fD9348136dCea154F752fe0B6dB45Fc298A589',
+};
+
 export const TOKENS_MAINNET: Token[] = [
   {
     symbol: 'ETH',

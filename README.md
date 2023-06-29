@@ -83,11 +83,13 @@ Going from there, you will be able to access the available functionalities simpl
 api.[functionality to execute]()
 ```
 
+> 👉 Please note the SDK is sub 1.0 release and is subject to breaking API changes
+
 ### Networks
 
-The three currently supported networks are `Mainnet`, `Goerli`, and `Local`. `Mainnet` is the live and fully operational network where actual transactions and operations take place. `Goerli` is a testnet used for testing and experimentation, allowing developers and users to try out new features and functionalities without using real money. A `Local` node refers to an individual user's computer or device that participates in the cryptocurrency network, storing a copy of the blockchain and helping to validate transactions within that network.
+The three currently supported networks are Ethereum `Mainnet`, Ethereum `Goerli`, and `Local`. `Mainnet` is the live and fully operational network where actual transactions and operations take place. `Goerli` is a testnet used for testing and experimentation, allowing developers to try out new features and functionalities without using real money. `Local` refers to a user's local computer and can point to a locally running EVM or forked node.
 
-The production Endaoment application, `app.endaoment.org` is on the mainnet. The staging and testing sites such as `app.staging.endaoment.org` are on the Goerli test network. To pull data from a specific site, you may have to change the network.
+The production Endaoment application, `app.endaoment.org` is on mainnet. Staging, located at `app.staging.endaoment.org`, is on Goerli. To pull data from a specific site, you may have to change the network.
 
 ## Examples
 
@@ -115,11 +117,13 @@ Example response:
   {
     name: "Open Source Election Technology Institute",
     ein: "208743186",
+    id: "..."
     ...
   },
   {
     name: "Rock the Vote",
     ein: "020767157",
+    id: "..."
     ...
   },
   ...
@@ -133,7 +137,8 @@ Since this functionality is paginated, it accepts the arguments of `count` and `
 ```ts
 api.searchOrgs({
   searchTerm: 'health',
-  nteeMajorCodes: 'S'
+  nteeMajorCodes: 'S',
+  countries: 'USA,BRA',
 })
 ```
 
@@ -162,7 +167,7 @@ Since this functionality is paginated, it accepts the arguments of `count` and `
 
 ```ts
 api.getOrgDeployTransaction({
-  ein: '020767157' // Deploying Org with this EIN
+  einOrId: '020767157' // Deploying Org with this identifier
 })
 ```
 
@@ -180,12 +185,12 @@ This call will result in something like:
 }
 ```
 
-or in the case that the EIN is invalid, it will look like:
+or in the case that the identifier is invalid, it will look like:
 
 ```json
 {
   error: "Not Found",
-  message: "Could not find org with EIN 123456789",
+  message: "Could not find org with identifier 123456789",
   statusCode: 404
 }
 ```
@@ -194,7 +199,7 @@ or in the case that the EIN is invalid, it will look like:
 
 ```ts
 api.getDonationSwapTransaction({
-    ein: '020767157', // Donating to Org with this EIN
+    einOrId: '020767157', // Donating to Org with this identifier
     amountIn: '1000000000000000000', // Donating 1 ETH
 })
 ```
@@ -218,12 +223,12 @@ This call will result in something like:
 }
 ```
 
-or in the case that the EIN is invalid, it will look like:
+or in the case that the identifier is invalid, it will look like:
 
 ```json
 {
   error: "Not Found",
-  message: "Could not find org with EIN 123456789",
+  message: "Could not find org with identifier 123456789",
   statusCode: 404
 }
 ```

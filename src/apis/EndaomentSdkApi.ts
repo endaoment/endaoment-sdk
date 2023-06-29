@@ -37,13 +37,13 @@ export interface GetDeployedOrgsRequest {
 }
 
 export interface GetDonationSwapTransactionRequest {
-    ein: string;
+    einOrId: string;
     amountIn: string;
     tokenContractAddress?: string;
 }
 
 export interface GetOrgDeployTransactionRequest {
-    ein: string;
+    einOrId: string;
 }
 
 export interface GetVisibleFundsRequest {
@@ -56,6 +56,8 @@ export interface SearchOrgsRequest {
     nteeMajorCodes?: string;
     nteeMinorCodes?: string;
     deployedStatus?: SearchOrgsDeployedStatusEnum;
+    countries?: string;
+    claimedStatus?: SearchOrgsClaimedStatusEnum;
     count?: number;
     offset?: number;
 }
@@ -89,7 +91,7 @@ export class EndaomentSdkApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/v1/sdk/orgs`,
+            path: `/v1/sdk/orgs/deployed`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -108,11 +110,12 @@ export class EndaomentSdkApi extends runtime.BaseAPI {
     }
 
     /**
+     *        If donating ETH, remove the `tokenContractAddress` parameter from the request.       The transaction sender must perform an `approve` operation beforehand for any ERC20 donation, giving a correct allowance for the swap.       
      * Get the transaction information required to swap and donate a given token amount to an org
      */
     async getDonationSwapTransactionRaw(requestParameters: GetDonationSwapTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NdaoSdkDonationSwap>> {
-        if (requestParameters.ein === null || requestParameters.ein === undefined) {
-            throw new runtime.RequiredError('ein','Required parameter requestParameters.ein was null or undefined when calling getDonationSwapTransaction.');
+        if (requestParameters.einOrId === null || requestParameters.einOrId === undefined) {
+            throw new runtime.RequiredError('einOrId','Required parameter requestParameters.einOrId was null or undefined when calling getDonationSwapTransaction.');
         }
 
         if (requestParameters.amountIn === null || requestParameters.amountIn === undefined) {
@@ -121,8 +124,8 @@ export class EndaomentSdkApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
-        if (requestParameters.ein !== undefined) {
-            queryParameters['ein'] = requestParameters.ein;
+        if (requestParameters.einOrId !== undefined) {
+            queryParameters['einOrId'] = requestParameters.einOrId;
         }
 
         if (requestParameters.tokenContractAddress !== undefined) {
@@ -146,6 +149,7 @@ export class EndaomentSdkApi extends runtime.BaseAPI {
     }
 
     /**
+     *        If donating ETH, remove the `tokenContractAddress` parameter from the request.       The transaction sender must perform an `approve` operation beforehand for any ERC20 donation, giving a correct allowance for the swap.       
      * Get the transaction information required to swap and donate a given token amount to an org
      */
     async getDonationSwapTransaction(requestParameters: GetDonationSwapTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NdaoSdkDonationSwap> {
@@ -157,14 +161,14 @@ export class EndaomentSdkApi extends runtime.BaseAPI {
      * Get the transaction information required to deploy a given org
      */
     async getOrgDeployTransactionRaw(requestParameters: GetOrgDeployTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NdaoSdkTransaction>> {
-        if (requestParameters.ein === null || requestParameters.ein === undefined) {
-            throw new runtime.RequiredError('ein','Required parameter requestParameters.ein was null or undefined when calling getOrgDeployTransaction.');
+        if (requestParameters.einOrId === null || requestParameters.einOrId === undefined) {
+            throw new runtime.RequiredError('einOrId','Required parameter requestParameters.einOrId was null or undefined when calling getOrgDeployTransaction.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.ein !== undefined) {
-            queryParameters['ein'] = requestParameters.ein;
+        if (requestParameters.einOrId !== undefined) {
+            queryParameters['einOrId'] = requestParameters.einOrId;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -244,6 +248,14 @@ export class EndaomentSdkApi extends runtime.BaseAPI {
 
         if (requestParameters.deployedStatus !== undefined) {
             queryParameters['deployedStatus'] = requestParameters.deployedStatus;
+        }
+
+        if (requestParameters.countries !== undefined) {
+            queryParameters['countries'] = requestParameters.countries;
+        }
+
+        if (requestParameters.claimedStatus !== undefined) {
+            queryParameters['claimedStatus'] = requestParameters.claimedStatus;
         }
 
         if (requestParameters.count !== undefined) {
@@ -330,3 +342,12 @@ export const SearchOrgsDeployedStatusEnum = {
     All: 'all'
 } as const;
 export type SearchOrgsDeployedStatusEnum = typeof SearchOrgsDeployedStatusEnum[keyof typeof SearchOrgsDeployedStatusEnum];
+/**
+ * @export
+ */
+export const SearchOrgsClaimedStatusEnum = {
+    Claimed: 'claimed',
+    Unclaimed: 'unclaimed',
+    All: 'all'
+} as const;
+export type SearchOrgsClaimedStatusEnum = typeof SearchOrgsClaimedStatusEnum[keyof typeof SearchOrgsClaimedStatusEnum];

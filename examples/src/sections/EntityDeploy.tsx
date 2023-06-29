@@ -32,14 +32,19 @@ function EntityDeploy({ sdk }: { sdk: EndaomentSdkApi }) {
 
   const handleSearch = async () => {
     setLoading(true);
+    setUndeployedOrgs([]);
+    setDeployTransaction(undefined);
     setUndeployedOrgs(await sdk.searchOrgs({ searchTerm, deployedStatus: 'undeployed' }));
     setLoading(false);
     setSearchTerm('');
   };
 
   const handleGetDeploymentData = async (org: NdaoSdkOrg) => {
+    setLoading(true);
     setOrgToDeploy(org);
+    setDeployTransaction(undefined);
     setDeployTransaction(await sdk.getOrgDeployTransaction(org));
+    setLoading(false);
   };
 
   const handleDeployOrg = async () => {
@@ -111,7 +116,7 @@ function EntityDeploy({ sdk }: { sdk: EndaomentSdkApi }) {
 
       <UnorderedList>
         {undeployedOrgs.map((org) => (
-          <ListItem key={org.ein} mb={4}>
+          <ListItem key={org.id} mb={4}>
             <Text display="inline" mr="2">
               {org.name}
             </Text>

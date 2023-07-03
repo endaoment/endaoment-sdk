@@ -138,8 +138,6 @@ const Entity = ({ entity, isTestnet }: { entity: NdaoSdkFund | NdaoSdkOrg; isTes
     getContractAddress();
   }, []);
 
-  // console.log(entity, isOrg, isUSOrg, identifier, isDeployed, contractAddress);
-
   return (
     <AccordionItem>
       <h2>

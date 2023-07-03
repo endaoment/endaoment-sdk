@@ -50,8 +50,6 @@ function EntityDeploy({ sdk }: { sdk: EndaomentSdkApi }) {
   const handleDeployOrg = async () => {
     if (deployTransaction && sendTransaction) sendTransaction();
     else console.error('No deploy transaction or sendTransaction function');
-
-    console.log(deployTransaction, sendTransaction, error);
   };
 
   return (

@@ -43,7 +43,7 @@ function EntityDeploy({ sdk }: { sdk: EndaomentSdkApi }) {
     setLoading(true);
     setOrgToDeploy(org);
     setDeployTransaction(undefined);
-    setDeployTransaction(await sdk.getOrgDeployTransaction(org));
+    setDeployTransaction(await sdk.getOrgDeployTransaction({ einOrId: org.id }));
     setLoading(false);
   };
 

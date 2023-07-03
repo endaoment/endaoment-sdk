@@ -1280,10 +1280,10 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.3.0.tgz#ea89004119dc42db2e1dba0f97d553f7372f6fcb"
   integrity sha512-AHPmaAx+RYfZz0eYu6Gviiagpmiyw98ySSlQvCUhVGDRtDFe4DBS0x1bSjdF3gqUDYOczB+yYvBTtEylYSdRhg==
 
-"@endaoment/sdk@^0.0.9":
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/@endaoment/sdk/-/sdk-0.0.9.tgz#e6d62f00d46882d4fb15608878f8fcf303856eb1"
-  integrity sha512-B+uCMMZmQ3/Mk+AaVvFDsxf8HfqzjsCrBswEYZhzPIzVJ3N0LtcCj9eKnZziimup5YAAdpNo0sU8/u1G2QRt5g==
+"@endaoment/sdk@^0.0.10":
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/@endaoment/sdk/-/sdk-0.0.10.tgz#43d42db194aa09f37419b6dd86bc5fe3ba5b9112"
+  integrity sha512-utdr0i1bdNmcbrQr/KcL1dYnC23fcb4DBr7C463Une0B1AsVQGbNhbbZA24295Hta13VOd6yVlx6Gr7h2U6geQ==
 
 "@esbuild/android-arm64@0.16.17":
   version "0.16.17"

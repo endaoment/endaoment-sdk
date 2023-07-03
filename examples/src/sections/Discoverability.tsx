@@ -113,7 +113,7 @@ const Entity = ({ entity, isTestnet }: { entity: NdaoSdkFund | NdaoSdkOrg; isTes
 
   const isOrg = 'ein' in entity;
   const isUSOrg = isOrg && !!entity.ein;
-  const identifier = isUSOrg ? entity.ein : entity.id;
+  const identifier = isUSOrg ? entity.ein! : entity.id;
   const isDeployed = !!entity.contractAddress;
 
   const orgFundFactoryContract = getContract({
@@ -163,7 +163,7 @@ const Entity = ({ entity, isTestnet }: { entity: NdaoSdkFund | NdaoSdkOrg; isTes
             <p>
               {isUSOrg && (
                 <>
-                  US Org - EIN {entity.ein.slice(0, 2)}-{entity.ein.slice(2)}
+                  US Org - EIN {entity.ein!.slice(0, 2)}-{entity.ein!.slice(2)}
                   <br />
                 </>
               )}

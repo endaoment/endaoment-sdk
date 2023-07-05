@@ -265,7 +265,7 @@ sdk.searchVisibleFunds({ name: 'Fund Name' })
 
 > Due to visibility settings, this query will only return `transparent` and `community` funds. No `private` funds will be returned.
 
-If you have questions about the different types of funds, see [References](#references).
+If you have questions about the different types of funds, see the [Endaoment Docs](https://docs.endaoment.org/donors/donor-advised-funds).
 
 ## Potential Errors
 
@@ -302,7 +302,7 @@ order to update descriptions or add new functionality, please refer back to the 
 
 To build and compile the typescript sources to javascript use:
 
-```
+```zsh
 yarn
 yarn build
 ```
@@ -310,11 +310,3 @@ yarn build
 ## Publishing
 
 First build the package then run `yarn publish`
-
-## References
-
-**Community Fund**: a fund that anyone can see and donate to.
-
-**Transparent Fund**: a fund that anyone can see, but only authorized users can donate to.
-
-**Private Fund**: a fund that is specific to a user. Only that user can access the fund.

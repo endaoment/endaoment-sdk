@@ -36,7 +36,7 @@ export interface NdaoSdkOrg {
      * @type {string}
      * @memberof NdaoSdkOrg
      */
-    ein: string;
+    ein: string | null;
     /**
      * The org's contract address
      * @type {string}

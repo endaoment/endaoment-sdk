@@ -32,21 +32,24 @@ function EntityDeploy({ sdk }: { sdk: EndaomentSdkApi }) {
 
   const handleSearch = async () => {
     setLoading(true);
+    setUndeployedOrgs([]);
+    setDeployTransaction(undefined);
     setUndeployedOrgs(await sdk.searchOrgs({ searchTerm, deployedStatus: 'undeployed' }));
     setLoading(false);
     setSearchTerm('');
   };
 
   const handleGetDeploymentData = async (org: NdaoSdkOrg) => {
+    setLoading(true);
     setOrgToDeploy(org);
-    setDeployTransaction(await sdk.getOrgDeployTransaction(org));
+    setDeployTransaction(undefined);
+    setDeployTransaction(await sdk.getOrgDeployTransaction({ einOrId: org.id }));
+    setLoading(false);
   };
 
   const handleDeployOrg = async () => {
     if (deployTransaction && sendTransaction) sendTransaction();
     else console.error('No deploy transaction or sendTransaction function');
-
-    console.log(deployTransaction, sendTransaction, error);
   };
 
   return (
@@ -71,7 +74,7 @@ function EntityDeploy({ sdk }: { sdk: EndaomentSdkApi }) {
       <VStack my="4">
         <Code p={4} w="100%">
           {deployTransaction && orgToDeploy && (
-            <Text mb="4">{`// Transaction data to deploy ${orgToDeploy.name} (EIN ${orgToDeploy.ein})`}</Text>
+            <Text mb="4">{`// Transaction data to deploy ${orgToDeploy.name}`}</Text>
           )}
           {'{'}
           <br />
@@ -111,7 +114,7 @@ function EntityDeploy({ sdk }: { sdk: EndaomentSdkApi }) {
 
       <UnorderedList>
         {undeployedOrgs.map((org) => (
-          <ListItem key={org.ein} mb={4}>
+          <ListItem key={org.id} mb={4}>
             <Text display="inline" mr="2">
               {org.name}
             </Text>

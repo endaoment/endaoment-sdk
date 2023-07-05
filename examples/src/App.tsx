@@ -12,7 +12,7 @@ import {
   VStack,
   Select,
 } from '@chakra-ui/react';
-import { Configuration, EndaomentSdkApi } from '@endaoment/sdk';
+import { Configuration, ConfigurationParameters, EndaomentSdkApi } from '@endaoment/sdk';
 import { ConnectKitButton } from 'connectkit';
 import { useAccount, useConnect, useNetwork, useSwitchNetwork } from 'wagmi';
 import CharitableGiving from './sections/CharitableGiving';
@@ -52,17 +52,17 @@ function App() {
   const { chain } = useNetwork();
   const { chains, switchNetwork } = useSwitchNetwork();
 
-  const isMainnet = chain?.id === 1;
+  const network: ConfigurationParameters['network'] =
+    chain?.id === 1 ? 'mainnet' : chain?.id === 5 ? 'goerli' : 'local';
 
   /**
    * SDK updates config based on chainId
    * mainnet - Prod API
    * goerli - Staging API
+   * local - Local dev API
    */
-  const sdk = useMemo(
-    () => new EndaomentSdkApi(new Configuration({ network: isMainnet ? 'mainnet' : 'goerli' })),
-    [chain?.id],
-  );
+  const sdk = useMemo(() => new EndaomentSdkApi(new Configuration({ network })), [chain?.id]);
+  const isTestnet = network === 'goerli';
 
   const handleChainChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const chainId = +e.target.value;
@@ -114,7 +114,7 @@ function App() {
             title="Donating to Endaoment Entities"
             description="Easily get token quotes and donate to your favorite org or fund"
           >
-            <CharitableGiving sdk={sdk} tokens={isMainnet ? TOKENS_MAINNET : TOKENS_GOERLI} />
+            <CharitableGiving sdk={sdk} tokens={isTestnet ? TOKENS_GOERLI : TOKENS_MAINNET} />
           </CustomTabPanel>
         </TabPanels>
       </Tabs>

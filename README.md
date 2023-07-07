@@ -59,7 +59,7 @@ It can be used in both TypeScript and JavaScript. In TypeScript, the definition 
 Navigate to the folder of your consuming project and run the following commands.
 
 ```bash
-yarn install @endaoment/sdk
+yarn add @endaoment/sdk
 ```
 
 In order to use the functionality available in the library, you must then import `EndaomentSdkApi` from the library and
@@ -265,6 +265,8 @@ sdk.searchVisibleFunds({ name: 'Fund Name' })
 
 > Due to visibility settings, this query will only return `transparent` and `community` funds. No `private` funds will be returned.
 
+If you have questions about the different types of funds, see the [Endaoment Docs](https://docs.endaoment.org/donors/donor-advised-funds).
+
 ## Potential Errors
 
 ### "ReferenceError: fetch is not defined"
@@ -300,7 +302,7 @@ order to update descriptions or add new functionality, please refer back to the 
 
 To build and compile the typescript sources to javascript use:
 
-```
+```zsh
 yarn
 yarn build
 ```

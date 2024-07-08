@@ -1,3 +1,10 @@
+<h2>
+  ⚠️ This repo is being deprecated in favor of using the <a href="https://api.endaoment.org/oas">Endaoment API Endpoints</a> directly
+</h2>
+<p>Check out the documentation in our <a href="https://developers.endaoment.org">developers page</a> for more information</p>
+
+<hr />
+
 <a href="https://developers.endaoment.org/" target="_blank" rel="noopener">
   <picture>
     <img alt="Endaoment developers" src="https://storage.googleapis.com/endaoment-static/readme-assets/sdk-readme-cover.png" />
